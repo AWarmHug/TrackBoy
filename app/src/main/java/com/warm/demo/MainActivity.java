@@ -17,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        TrackView.bind(mBinding.tv,"eventId","点击","弹屏");
+//        TrackView.bind(mBinding.tv,"eventId","点击","弹屏");
         mBinding.tv.setOnClickListener(new View.OnClickListener() {
+            @Event(eventId = "123",value = "点击")
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "弹一下", Toast.LENGTH_SHORT).show();

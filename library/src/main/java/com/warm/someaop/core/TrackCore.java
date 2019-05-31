@@ -21,12 +21,12 @@ import java.lang.reflect.Method;
 @Aspect
 public class TrackCore {
 
-    @Pointcut("execution(@com.example.library.annotation.Event * *(..))")
+    @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
     public void method() {
 
     }
 
-    @Pointcut("execution(@com.example.library.annotation.Event *.new(..))")
+    @Pointcut("execution(@com.warm.someaop.annotation.Event *.new(..))")
     public void constructor() {
 
     }
