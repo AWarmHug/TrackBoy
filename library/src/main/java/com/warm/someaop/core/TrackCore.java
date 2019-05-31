@@ -5,8 +5,9 @@ import android.view.View;
 
 
 import com.warm.someaop.R;
+import com.warm.someaop.Track;
 import com.warm.someaop.TrackView;
-import com.warm.someaop.annotation.Track;
+import com.warm.someaop.annotation.Event;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -20,12 +21,12 @@ import java.lang.reflect.Method;
 @Aspect
 public class TrackCore {
 
-    @Pointcut("execution(@com.example.library.annotation.Track * *(..))")
+    @Pointcut("execution(@com.example.library.annotation.Event * *(..))")
     public void method() {
 
     }
 
-    @Pointcut("execution(@com.example.library.annotation.Track *.new(..))")
+    @Pointcut("execution(@com.example.library.annotation.Event *.new(..))")
     public void constructor() {
 
     }
@@ -37,9 +38,9 @@ public class TrackCore {
 
     @After("method()||constructor()")
     public void inject(JoinPoint joinPoint) throws Throwable {
-        Track track = getMethodAnnotation(joinPoint, Track.class);
-        if (track != null) {
-            track(track);
+        Event event = getMethodAnnotation(joinPoint, Event.class);
+        if (event != null) {
+            track(event);
         }
     }
 
@@ -49,7 +50,7 @@ public class TrackCore {
         if (o.length == 1 && o[0] instanceof View) {
             View view = (View) o[0];
             TrackView.Event event = (TrackView.Event) view.getTag(R.id.key_track);
-            if (event!=null) {
+            if (event != null) {
                 track(event.getEventId(), event.getEvents());
             }
         }
@@ -65,20 +66,14 @@ public class TrackCore {
         return null;
     }
 
-    private void track(Track debugLog) {
+    private void track(Event debugLog) {
         if (debugLog != null) {
             track(debugLog.eventId(), debugLog.value());
         }
     }
 
-    private void track(String eventId, String... strs) {
-        StringBuilder sb = new StringBuilder();
-        for (String str : strs) {
-            sb.append(str);
-        }
-
-        Log.d("Track", "track: eventId=" + eventId + ",action=" + sb.toString());
-
+    private void track(String eventId, String... events) {
+        Track.getTracker().track(eventId, events);
     }
 
 }

@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.warm.demo.databinding.ActivityMainBinding;
 import com.warm.someaop.TrackView;
-import com.warm.someaop.annotation.Track;
+import com.warm.someaop.annotation.Event;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mBinding;
@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         TrackView.bind(mBinding.tv,"eventId","点击","弹屏");
         mBinding.tv.setOnClickListener(new View.OnClickListener() {
-            @Track(eventId = "eventId", value = {"点击", "弹屏"})
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "弹一下", Toast.LENGTH_SHORT).show();
