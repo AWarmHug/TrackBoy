@@ -1,12 +1,13 @@
 package com.warm.someaop.core;
 
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.CompoundButton;
 
 
-import com.warm.someaop.R;
+import com.warm.someaop.Data;
+import com.warm.someaop.Trace;
 import com.warm.someaop.Track;
-import com.warm.someaop.TrackView;
 import com.warm.someaop.annotation.Event;
 
 import org.aspectj.lang.JoinPoint;
@@ -21,12 +22,12 @@ import java.lang.reflect.Method;
 @Aspect
 public class TrackCore {
 
-    @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
+    @Pointcut("execution(@com.warm.someaop.annotation.Trace * *(..))")
     public void method() {
 
     }
 
-    @Pointcut("execution(@com.warm.someaop.annotation.Event *.new(..))")
+    @Pointcut("execution(@com.warm.someaop.annotation.Trace *.new(..))")
     public void constructor() {
 
     }
@@ -35,6 +36,12 @@ public class TrackCore {
     public void onClick() {
 
     }
+
+    @Pointcut("execution(* android.widget.CompoundButton.OnCheckedChangeListener.onCheckedChanged(..))")
+    public void onCheckedChanged() {
+
+    }
+
 
     @After("method()||constructor()")
     public void inject(JoinPoint joinPoint) throws Throwable {
@@ -49,9 +56,30 @@ public class TrackCore {
         Object[] o = joinPoint.getArgs();
         if (o.length == 1 && o[0] instanceof View) {
             View view = (View) o[0];
-            TrackView.Event event = (TrackView.Event) view.getTag(R.id.key_track);
-            if (event != null) {
-                track(event.getEventId(), event.getEvents());
+            Trace trace = Data.getEvent(getViewName(joinPoint, view));
+            if (trace != null) {
+                track(trace.getEventId(), trace.getValue());
+            }
+        }
+    }
+
+    @After("onCheckedChanged()&&!method()")
+    public void injectOnCheckedChanged(JoinPoint joinPoint) throws Throwable {
+        Object[] o = joinPoint.getArgs();
+        if (o.length == 2 && o[0] instanceof CompoundButton) {
+            View view = (View) o[0];
+
+            boolean isChecked = (boolean) o[1];
+
+            Trace trace = Data.getEvent(getViewName(joinPoint, view));
+
+            if (trace != null) {
+                if (!TextUtils.isEmpty(trace.getValue()) && trace.getValue().contains("#")) {
+                    String[] checkValue = trace.getValue().split("#");
+                    track(trace.getEventId(), isChecked ? checkValue[0] : checkValue[1]);
+                } else {
+                    track(trace.getEventId(), trace.getValue());
+                }
             }
         }
     }
@@ -64,6 +92,21 @@ public class TrackCore {
             return method.getAnnotation(a);
         }
         return null;
+    }
+
+
+    private String getViewName(JoinPoint joinPoint, View view) {
+        StringBuilder sb = new StringBuilder();
+
+        Class<?> EnclosingClass = joinPoint.getTarget().getClass().getEnclosingClass();
+        if (EnclosingClass != null) {
+            sb.append(EnclosingClass.getName());
+        } else {
+            sb.append(joinPoint.getTarget().getClass().getName());
+        }
+        sb.append("$");
+        sb.append(view.getResources().getResourceEntryName(view.getId()));
+        return sb.toString();
     }
 
     private void track(Event debugLog) {

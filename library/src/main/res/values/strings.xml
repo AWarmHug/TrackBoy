@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Library</string>
-    <item name="key_track" type="id" />
 
 </resources>

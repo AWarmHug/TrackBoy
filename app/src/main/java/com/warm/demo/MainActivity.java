@@ -1,29 +1,77 @@
 package com.warm.demo;
 
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.warm.demo.databinding.ActivityMainBinding;
-import com.warm.someaop.TrackView;
 import com.warm.someaop.annotation.Event;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ActivityMainBinding mBinding;
+
+    private  AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-//        TrackView.bind(mBinding.tv,"eventId","点击","弹屏");
+
+        dialog=new AlertDialog.Builder(this)
+                .setTitle("标题")
+                .setMessage("这是内容")
+                .setPositiveButton("是的", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "灌灌灌灌", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .create();
+
+        Log.d("Trace", "onCreate: " + mBinding.kktitle.toString());
+        mBinding.kktitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "标题", Toast.LENGTH_SHORT).show();
+            }
+        });
+//        TrackView.bind(mBinding.tv, "eventId", "点击", "弹屏");
         mBinding.tv.setOnClickListener(new View.OnClickListener() {
-            @Event(eventId = "123",value = "点击")
+
+            @Event(eventId = "eventId", value = "点了")
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "弹一下", Toast.LENGTH_SHORT).show();
             }
         });
+        mBinding.tvDialog.setOnClickListener(this);
+
+        mBinding.cbAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(MainActivity.this, isChecked ? "选中" : "未选中", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        mBinding.edName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Toast.makeText(MainActivity.this, hasFocus ? "焦點" : "无焦点", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        dialog.show();
+
     }
 }

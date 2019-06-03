@@ -11,7 +11,7 @@ public class DefaultTracker implements Tracker {
         for (String str : events) {
             sb.append(str);
         }
-        Log.d("Event", "track: eventId=" + eventId + ",action=" + sb.toString());
+        Log.d("Trace", "track: eventId=" + eventId + ",action=" + sb.toString());
 
     }
 }

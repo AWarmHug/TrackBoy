@@ -9,5 +9,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Event {
     String eventId() default "";
-    String[] value();
+
+    String[] value() default "";
+
+    String[] checkedValue() default "";
 }

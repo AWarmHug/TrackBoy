@@ -4,20 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".MainActivity">
 
+        <TextView
+            android:id="@+id/kktitle"
+            android:text="标题"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="快点我"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="快点我" />
+        <Button
+            android:id="@+id/tvDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="出现弹框" />
 
-    </android.support.constraint.ConstraintLayout>
+        <CheckBox
+            android:id="@+id/cbAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选择地址" />
+
+        <EditText
+            android:id="@+id/edName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入姓名" />
+
+    </LinearLayout>
 </layout>
