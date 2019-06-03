@@ -37,7 +37,7 @@ public class TrackCore {
 
     }
 
-    @Pointcut("execution(* android.view.View.OnClickListener.onClick(..))")
+    @Pointcut("execution(* android.view.View.OnClickListener.onClick(..))||execution(void *..lambda*(*..View))")
     public void onClick() {
 
     }
@@ -103,9 +103,13 @@ public class TrackCore {
     private String getName(JoinPoint joinPoint, View view) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(getClassName(joinPoint.getTarget().getClass()));
-        sb.append("$");
-        sb.append(getViewName(view));
+
+        sb.append(getViewName(view))
+                .append("$")
+                .append(getClassName(joinPoint.getTarget().getClass()))
+                .append("$")
+                .append(getClassName(view.getContext().getClass()));
+
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "getName: " + sb.toString());
         }

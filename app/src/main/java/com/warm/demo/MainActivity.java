@@ -37,12 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .create();
 
         Log.d("Trace", "onCreate: " + mBinding.kktitle.toString());
-        mBinding.kktitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "标题", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mBinding.kktitle.setOnClickListener(v -> Toast.makeText(MainActivity.this, "标题", Toast.LENGTH_SHORT).show());
 //        TrackView.bind(mBinding.tv, "eventId", "点击", "弹屏");
         mBinding.tv.setOnClickListener(new View.OnClickListener() {
 
