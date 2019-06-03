@@ -63,7 +63,7 @@ public class TrackCore {
             View view = (View) o[0];
             Trace trace = Data.getEvent(getName(joinPoint, view));
             if (trace != null) {
-                track(trace.getEventId(), trace.getValue());
+                track(trace.getId(), trace.getValue());
             }
         }
     }
@@ -81,9 +81,9 @@ public class TrackCore {
             if (trace != null) {
                 if (!TextUtils.isEmpty(trace.getValue()) && trace.getValue().contains("#")) {
                     String[] checkValue = trace.getValue().split("#");
-                    track(trace.getEventId(), isChecked ? checkValue[0] : checkValue[1]);
+                    track(trace.getId(), isChecked ? checkValue[0] : checkValue[1]);
                 } else {
-                    track(trace.getEventId(), trace.getValue());
+                    track(trace.getId(), trace.getValue());
                 }
             }
         }
