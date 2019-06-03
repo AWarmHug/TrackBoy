@@ -8,19 +8,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:tag="主页"
         tools:context=".MainActivity">
 
         <TextView
-            android:id="@+id/kktitle"
-            android:text="标题"
-            android:gravity="center"
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="标题" />
+
+        <Button
+            android:id="@+id/kktitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="点击" />
+
         <Button
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="快点我" />
+
         <Button
             android:id="@+id/tvDialog"
             android:layout_width="wrap_content"
@@ -38,6 +48,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入姓名" />
+
+        <include layout="@layout/item" />
+
+        <include layout="@layout/item" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorAccent" />
+
+        <com.warm.demo.ItemLayout
+            android:id="@+id/item1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.warm.demo.ItemLayout>
+
+        <com.warm.demo.ItemLayout
+            android:id="@+id/item2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.warm.demo.ItemLayout>
 
     </LinearLayout>
 </layout>

@@ -1,9 +1,11 @@
 package com.warm.demo;
 
 import android.content.DialogInterface;
-import android.databinding.DataBindingUtil;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +18,14 @@ import com.warm.someaop.annotation.Event;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ActivityMainBinding mBinding;
 
-    private  AlertDialog dialog;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        dialog=new AlertDialog.Builder(this)
+        dialog = new AlertDialog.Builder(this)
                 .setTitle("标题")
                 .setMessage("这是内容")
                 .setPositiveButton("是的", new DialogInterface.OnClickListener() {
@@ -64,6 +66,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 Toast.makeText(MainActivity.this, hasFocus ? "焦點" : "无焦点", Toast.LENGTH_SHORT).show();
+            }
+        });
+        findViewById(R.id.tvTitle1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "hhhh", Toast.LENGTH_SHORT).show();
+
             }
         });
 

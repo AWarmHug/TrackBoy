@@ -1,6 +1,6 @@
 package com.warm.someaop;
 
-import android.support.v4.util.LruCache;
+import androidx.collection.LruCache;
 
 public class Data {
 
