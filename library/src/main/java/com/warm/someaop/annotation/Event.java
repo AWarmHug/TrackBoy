@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
 public @interface Event {
     String eventId() default "";
 
-    String[] value() default "";
+    String value() default "";
 
-    String[] checkedValue() default "";
 }

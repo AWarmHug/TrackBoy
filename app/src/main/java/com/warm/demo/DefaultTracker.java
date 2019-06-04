@@ -6,12 +6,9 @@ import com.warm.someaop.Tracker;
 
 public class DefaultTracker implements Tracker {
     @Override
-    public void track(String eventId, String[] events) {
-        StringBuilder sb = new StringBuilder();
-        for (String str : events) {
-            sb.append(str);
-        }
-        Log.d("Trace", "track: eventId=" + eventId + ",action=" + sb.toString());
+    public void track(String eventId, String value) {
+
+        Log.d("Trace", "track: eventId=" + eventId + ",action=" + value);
 
     }
 }

@@ -1,29 +1,28 @@
 package com.warm.demo;
 
 import android.content.DialogInterface;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.warm.demo.databinding.ActivityMainBinding;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
+import com.warm.demo.databinding.ActivityBinding;
 import com.warm.someaop.annotation.Event;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private ActivityMainBinding mBinding;
+    private ActivityBinding mBinding;
 
     private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity);
 
         dialog = new AlertDialog.Builder(this)
                 .setTitle("标题")
@@ -64,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         findViewById(R.id.tvTitle1).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "hhhh", Toast.LENGTH_SHORT).show();

@@ -1,6 +1,10 @@
 package com.warm.someaop;
 
 public class Trace {
+    public static final String or="\\?";
+
+
+
     private String id;
     private String value;
 
