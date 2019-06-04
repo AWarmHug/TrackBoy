@@ -46,7 +46,7 @@ public class EventCore extends BaseCore{
 
     protected void track(Event debugLog) {
         if (debugLog != null) {
-            Log.d(TAG, "track: "+debugLog.eventId());
+            Log.d(TAG, "track: "+debugLog.value());
             track(debugLog.eventId(), debugLog.value());
         }
     }
