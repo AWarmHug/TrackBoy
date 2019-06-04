@@ -1,8 +1,8 @@
-package com.warm.someaop.core;
+package com.warm.trackboy.core;
 
 import android.util.Log;
 
-import com.warm.someaop.annotation.Event;
+import com.warm.trackboy.annotation.Event;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -16,12 +16,12 @@ import java.lang.reflect.Method;
 @Aspect
 public class EventCore extends BaseCore{
 
-    @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
+    @Pointcut("execution(@com.warm.trackboy.annotation.Event * *(..))")
     public void method() {
 
     }
 
-    @Pointcut("execution(@com.warm.someaop.annotation.Event *.new(..))")
+    @Pointcut("execution(@com.warm.trackboy.annotation.Event *.new(..))")
     public void constructor() {
 
     }

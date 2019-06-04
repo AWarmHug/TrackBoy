@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.warm.demo.databinding.ActivityBinding;
-import com.warm.someaop.annotation.Event;
+import com.warm.trackboy.annotation.Event;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ActivityBinding mBinding;

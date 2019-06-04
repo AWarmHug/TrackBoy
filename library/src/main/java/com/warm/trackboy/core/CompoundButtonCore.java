@@ -1,14 +1,14 @@
-package com.warm.someaop.core;
+package com.warm.trackboy.core;
 
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.warm.someaop.BuildConfig;
-import com.warm.someaop.Data;
-import com.warm.someaop.Trace;
-import com.warm.someaop.utils.Utils;
+import com.warm.trackboy.BuildConfig;
+import com.warm.trackboy.Data;
+import com.warm.trackboy.Trace;
+import com.warm.trackboy.utils.Utils;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -18,13 +18,17 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class CompoundButtonCore extends BaseCore {
 
+    @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
+    public void method() {
+
+    }
 
     @Pointcut("execution(* android.widget.CompoundButton.OnCheckedChangeListener.onCheckedChanged(..))")
     public void onCheckedChanged() {
 
     }
 
-    @After("onCheckedChanged()&&!within(EventCore)")
+    @After("onCheckedChanged()&&!method()")
     public void injectOnCheckedChanged(JoinPoint joinPoint) throws Throwable {
         Object[] o = joinPoint.getArgs();
         if (o.length == 2 && o[0] instanceof CompoundButton) {

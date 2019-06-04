@@ -1,8 +1,4 @@
-package com.warm.someaop.utils;
-
-import android.text.TextUtils;
-
-import androidx.annotation.NonNull;
+package com.warm.trackboy.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

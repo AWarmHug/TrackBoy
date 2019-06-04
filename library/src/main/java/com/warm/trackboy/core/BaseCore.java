@@ -1,30 +1,9 @@
-package com.warm.someaop.core;
+package com.warm.trackboy.core;
 
-import android.content.DialogInterface;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-
-import com.warm.someaop.BuildConfig;
-import com.warm.someaop.Data;
-import com.warm.someaop.Trace;
-import com.warm.someaop.Track;
-import com.warm.someaop.annotation.Event;
-import com.warm.someaop.utils.Utils;
-
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+import com.warm.trackboy.Track;
 
 public class BaseCore {
     protected static final String TAG = "Track----";
