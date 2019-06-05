@@ -1,8 +1,11 @@
 package com.warm.trackboy.core;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.warm.trackboy.Data;
+import com.warm.trackboy.Trace;
 import com.warm.trackboy.Track;
 
 public class BaseCore {
@@ -51,8 +54,9 @@ public class BaseCore {
     }
 
 
-    protected void track(String eventId, String events) {
-        Track.getTracker().track(eventId, events);
+    protected void track(String id, String value) {
+
+        Track.getTracker().track(id, value);
     }
 
 }

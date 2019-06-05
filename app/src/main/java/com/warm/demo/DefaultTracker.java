@@ -8,7 +8,7 @@ public class DefaultTracker implements Tracker {
     @Override
     public void track(String eventId, String value) {
 
-        Log.d("Trace", "track: eventId=" + eventId + ",action=" + value);
+        Log.d("Track", "track: eventId=" + eventId + ",action=" + value);
 
     }
 }

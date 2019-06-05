@@ -13,9 +13,9 @@ public class MyApp extends Application {
 
         Data.putEvent("AppCompatButton:kktitle$LinearLayout:-1$MainActivity$MainActivity", "eventId", "点击标题");
 
-        Data.putEvent("AppCompatCheckBox:cbAddress$LinearLayout:-1$MainActivity$MainActivity", "eventId", "选中#未选中");
+        Data.putEvent("9e6b11c0db8d57f4794faf0625913f87", "eventId", "选中#未选中");
 
-        Data.putEvent("AppCompatButton:tvDialog$LinearLayout:-1$MainActivity$MainActivity","eventId","打开弹框");
+        Data.putEvent("c6fb01aa89e4a01cb4d40304f0c9e27a","eventId","打开弹框");
 
     }
 }

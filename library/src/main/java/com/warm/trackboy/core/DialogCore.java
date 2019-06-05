@@ -34,7 +34,8 @@ public class DialogCore extends BaseCore {
         Object[] o = joinPoint.getArgs();
         if (o.length == 2 && o[0] instanceof DialogInterface) {
             DialogInterface dialogInterface = (DialogInterface) o[0];
-            Trace trace = Data.getEvent(getName(joinPoint, dialogInterface, (int) o[1]));
+            String name = getName(joinPoint, dialogInterface, (int) o[1]);
+            Trace trace = Data.getEvent(name);
             if (trace != null) {
                 track(trace.getId(), trace.getValue());
             }
