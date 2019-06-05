@@ -1,7 +1,10 @@
 package com.warm.demo;
 
 import android.app.Application;
+import android.content.Intent;
+import android.view.View;
 
+import com.warm.demo.detail.DetailActivity;
 import com.warm.trackboy.Data;
 import com.warm.trackboy.Track;
 
@@ -17,5 +20,10 @@ public class MyApp extends Application {
 
         Data.putEvent("c6fb01aa89e4a01cb4d40304f0c9e27a","eventId","打开弹框");
 
+    }
+
+    public void goDetail(View v) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        startActivity(intent);
     }
 }

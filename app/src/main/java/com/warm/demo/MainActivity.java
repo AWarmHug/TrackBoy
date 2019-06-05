@@ -18,7 +18,7 @@ import com.warm.trackboy.Data;
 import com.warm.trackboy.Track;
 import com.warm.trackboy.annotation.Event;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     private ActivityBinding mBinding;
 
     private AlertDialog dialog;
@@ -50,7 +50,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "弹一下", Toast.LENGTH_SHORT).show();
             }
         });
-        mBinding.tvDialog.setOnClickListener(this);
+        mBinding.tvDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
 
         mBinding.cbAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -75,18 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        mBinding.btGoDetail.setOnClickListener(v -> goDetail(v));
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        dialog.show();
-
-    }
-
-    public void goDetail(View v) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        startActivity(intent);
+        mBinding.btGoDetail.setOnClickListener(v -> {
+            Intent intent = new Intent(this, DetailActivity.class);
+            startActivity(intent);
+        });
     }
 }
