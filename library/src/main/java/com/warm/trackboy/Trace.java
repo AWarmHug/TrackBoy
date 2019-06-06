@@ -1,9 +1,9 @@
 package com.warm.trackboy;
 
 public class Trace {
-    public static final String or = "\\?";
+    public static final String or = "#";
 
-    public static final String r = "^\\^r\\^$";
+    public static final String r = "^^r^$";
 
 
     private String id;

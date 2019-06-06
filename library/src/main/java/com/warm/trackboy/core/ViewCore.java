@@ -1,5 +1,6 @@
 package com.warm.trackboy.core;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 
@@ -21,21 +22,18 @@ public class ViewCore extends BaseCore {
 
     }
 
-    @Pointcut("execution(* android.view.View.OnClickListener.onClick(..))||execution(void *..lambda*(android.view.View))")
-    public void onClick() {
+    @Pointcut(value = "(execution(* android.view.View.OnClickListener.onClick(android.view.View))&&args(view))||(execution(void *..lambda*(android.view.View))&&args(view))")
+    public void onClick(View view) {
 
     }
 
 
-    @After("onClick()&&!method()")
-    public void injectOnClick(JoinPoint joinPoint) throws Throwable {
-        Object[] o = joinPoint.getArgs();
-        if (o.length == 1 && o[0] instanceof View) {
-            View view = (View) o[0];
-            Trace trace = Data.getEvent(getName(joinPoint, view));
-            if (trace != null) {
-                track(trace.getId(), trace.getValue());
-            }
+    @After("onClick(view)&&!method()&&this(obj)")
+    public void injectOnClick(JoinPoint joinPoint, View view,Object obj) throws Throwable {
+        Log.d(TAG, "injectOnClick: "+obj.getClass().getSimpleName());
+        Trace trace = Data.getEvent(getName(joinPoint, view));
+        if (trace != null) {
+            track(trace.getId(), trace.getValue());
         }
     }
 

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 .create();
 
         Log.d("Trace", "onCreate: " + mBinding.kktitle.toString());
-        mBinding.kktitle.setOnClickListener(v -> Toast.makeText(MainActivity.this, "标题", Toast.LENGTH_SHORT).show());
+        mBinding.kktitle.setOnClickListener(v -> Toast.makeText(this, "标题", Toast.LENGTH_SHORT).show());
 //        TrackView.bind(mBinding.tv, "eventId", "点击", "弹屏");
         mBinding.tv.setOnClickListener(new View.OnClickListener() {
 
@@ -57,13 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mBinding.cbAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(MainActivity.this, isChecked ? "选中" : "未选中", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+        mBinding.cbAddress.setOnCheckedChangeListener((buttonView, isChecked) -> Toast.makeText(MainActivity.this, isChecked ? "选中" : "未选中", Toast.LENGTH_SHORT).show());
 
         mBinding.edName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

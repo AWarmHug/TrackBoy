@@ -23,28 +23,22 @@ public class CompoundButtonCore extends BaseCore {
 
     }
 
-    @Pointcut("execution(* android.widget.CompoundButton.OnCheckedChangeListener.onCheckedChanged(..))")
-    public void onCheckedChanged() {
+    @Pointcut("execution(* android.widget.CompoundButton.OnCheckedChangeListener.onCheckedChanged(android.widget.CompoundButton,boolean))&&args(buttonView,isChecked)||(execution(void *..lambda*(android.widget.CompoundButton,boolean))&&args(buttonView,isChecked))")
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
     }
 
-    @After("onCheckedChanged()&&!method()")
-    public void injectOnCheckedChanged(JoinPoint joinPoint) throws Throwable {
-        Object[] o = joinPoint.getArgs();
-        if (o.length == 2 && o[0] instanceof CompoundButton) {
-            View view = (View) o[0];
+    @After("onCheckedChanged(buttonView,isChecked)&&!method()")
+    public void injectOnCheckedChanged(JoinPoint joinPoint, CompoundButton buttonView, boolean isChecked) throws Throwable {
 
-            boolean isChecked = (boolean) o[1];
+        Trace trace = Data.getEvent(getName(joinPoint, buttonView));
 
-            Trace trace = Data.getEvent(getName(joinPoint, view));
-
-            if (trace != null) {
-                if (!TextUtils.isEmpty(trace.getValue()) && trace.getValue().contains(Trace.or)) {
-                    String[] checkValue = trace.getValue().split(Trace.or);
-                    track(trace.getId(), isChecked ? checkValue[0] : checkValue[1]);
-                } else {
-                    track(trace.getId(), trace.getValue());
-                }
+        if (trace != null) {
+            if (!TextUtils.isEmpty(trace.getValue()) && trace.getValue().contains(Trace.or)) {
+                String[] checkValue = trace.getValue().split(Trace.or);
+                track(trace.getId(), isChecked ? checkValue[0] : checkValue[1]);
+            } else {
+                track(trace.getId(), trace.getValue());
             }
         }
     }
