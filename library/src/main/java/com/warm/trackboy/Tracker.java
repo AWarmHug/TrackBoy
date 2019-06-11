@@ -1,5 +1,5 @@
 package com.warm.trackboy;
 
 public interface Tracker {
-    public void track(String eventId,String events);
+    void track(String eventId, String events);
 }

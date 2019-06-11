@@ -76,5 +76,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="进入详情页" />
+
+        <Button
+            android:id="@+id/btThis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lambda_this" />
     </LinearLayout>
 </layout>

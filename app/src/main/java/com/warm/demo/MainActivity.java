@@ -78,5 +78,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DetailActivity.class);
             startActivity(intent);
         });
+        mBinding.btThis.setOnClickListener(this::onBtThisClick);
+    }
+    public void onBtThisClick(View view){
+        Toast.makeText(MainActivity.this, "onBtThisClick", Toast.LENGTH_SHORT).show();
+
     }
 }
