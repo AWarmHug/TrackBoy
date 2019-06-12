@@ -20,6 +20,8 @@ public class MyApp extends Application {
 
         Data.putEvent("c6fb01aa89e4a01cb4d40304f0c9e27a","00003","打开弹框");
 
+        Data.putEvent("e5cfec6bddcbc26958c45e124c371226","00003","申请信息：");
+
     }
 
     public void goDetail(View v) {

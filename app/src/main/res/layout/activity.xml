@@ -82,5 +82,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="lambda_this" />
+        <com.warm.demo.ApplyLayout
+            android:id="@+id/applyLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.warm.demo.ApplyLayout>
     </LinearLayout>
 </layout>
