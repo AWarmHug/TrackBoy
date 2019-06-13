@@ -3,90 +3,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:tag="主页"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvTitle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="标题" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:tag="主页"
+            tools:context=".MainActivity">
 
-        <Button
-            android:id="@+id/kktitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="点击" />
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="标题" />
 
-        <Button
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="快点我" />
+            <Button
+                android:id="@+id/kktitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="点击" />
 
-        <Button
-            android:id="@+id/tvDialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="出现弹框" />
+            <Button
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="快点我" />
 
-        <CheckBox
-            android:id="@+id/cbAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="选择地址" />
+            <Button
+                android:id="@+id/tvDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="出现弹框" />
 
-        <EditText
-            android:id="@+id/edName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="请输入姓名" />
+            <CheckBox
+                android:id="@+id/cbAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="选择地址" />
 
-        <include layout="@layout/item" />
+            <EditText
+                android:id="@+id/edName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入姓名" />
 
-        <include layout="@layout/item" />
+            <include layout="@layout/item" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/colorAccent" />
+            <include layout="@layout/item" />
 
-        <com.warm.demo.ItemLayout
-            android:id="@+id/item1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.warm.demo.ItemLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorAccent" />
 
-        <com.warm.demo.ItemLayout
-            android:id="@+id/item2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.warm.demo.ItemLayout>
+            <com.warm.demo.ItemLayout
+                android:id="@+id/item1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></com.warm.demo.ItemLayout>
+
+            <com.warm.demo.ItemLayout
+                android:id="@+id/item2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></com.warm.demo.ItemLayout>
 
 
-        <Button
-            android:id="@+id/btGoDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="进入详情页" />
+            <Button
+                android:id="@+id/btGoDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="进入详情页" />
 
-        <Button
-            android:id="@+id/btThis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="lambda_this" />
-        <com.warm.demo.ApplyLayout
-            android:id="@+id/applyLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btThis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lambda_this" />
 
-        </com.warm.demo.ApplyLayout>
-    </LinearLayout>
+            <com.warm.demo.ApplyLayout
+                android:id="@+id/applyLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.warm.demo.ApplyLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </layout>

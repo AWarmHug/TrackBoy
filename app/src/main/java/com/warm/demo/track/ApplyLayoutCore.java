@@ -1,10 +1,11 @@
-package com.warm.demo;
+package com.warm.demo.track;
 
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.warm.demo.R;
 import com.warm.trackboy.BuildConfig;
 import com.warm.trackboy.Data;
 import com.warm.trackboy.Trace;
