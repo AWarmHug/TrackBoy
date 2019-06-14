@@ -79,24 +79,26 @@ class JavassistTransform extends Transform {
                     return
                 }
                 dir.eachFileRecurse { File file ->
-                    String filePath = file.absolutePath
-                    if (filePath.endsWith(".class") && !filePath.contains('R$') && !filePath.contains('$')//代理类
-                            && !filePath.contains('R.class') && !filePath.contains("BuildConfig.class")) {
-                        CtClass ctClass = pool.get("android.widget.TextView")
-                        if (ctClass.isFrozen()) ctClass.defrost()
+                    CtClass ctClass = pool.get("android.widget.TextView")
+                    if (ctClass != null) {
+
+                        if (ctClass.isFrozen()) {
+                            ctClass.defrost()
+                        }
 
                         ctClass.setSuperclass(pool.get("com.warm.app_plugin.MyView"))
                         ctClass.writeFile()
 
                         ctClass.detach()
                     }
+
                 }
 
                 // 获取output目录
                 def dest = transformInvocation.outputProvider.getContentLocation(it.name,
                         it.contentTypes, it.scopes,
                         Format.DIRECTORY)
-
+                ctClass.setSuperclass(pool.get("com.warm.app_plugin.MyView"))
                 // 将input的目录复制到output指定目录
                 FileUtils.copyDirectory(it.file, dest)
             }
