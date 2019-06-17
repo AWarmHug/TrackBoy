@@ -15,7 +15,6 @@ import org.gradle.api.Project
 
 class JavassistTransform extends Transform {
     Project mProject
-    List<JarClassPath> classPathList = new ArrayList()
 
     JavassistTransform(Project project) {
         mProject = project
@@ -47,72 +46,50 @@ class JavassistTransform extends Transform {
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
         super.transform(transformInvocation)
         mProject.logger.error "-----transform开始------"
-        transformInvocation.inputs.each { TransformInput input ->
-            try {
-                input.jarInputs.each {
+        def inputs = transformInvocation.inputs
+        def outputProvider = transformInvocation.outputProvider
 
-                    ClassPool pool = ClassPool.getDefault()
-                    def classPath = new JarClassPath(it.file.absolutePath)
-                    classPathList.add(classPath)
-                    pool.appendClassPath(classPath)
-
-                    //project.android.bootClasspath 加入android.jar，否则找不到android相关的所有类
-                    pool.appendClassPath(mProject.android.bootClasspath[0].toString())
-                    // 重命名输出文件（同目录copyFile会冲突）
-                    String outputFileName = it.name.replace(".jar", "") + '-' + it.file.path.hashCode()
-                    def output = transformInvocation.outputProvider.getContentLocation(outputFileName, it.contentTypes, it.scopes, Format.JAR)
-                    FileUtils.copyFile(it.file, output)
-                }
-            } catch (Exception e) {
-                mProject.logger.error e.getMessage()
-            }
-
-            input.directoryInputs.each {
-
-
-                ClassPool pool = ClassPool.getDefault()
-                pool.appendClassPath(it.file.absolutePath)
-                pool.appendClassPath(mProject.android.bootClasspath[0].toString())
-
-                File dir = new File(it.file.absolutePath)
-                if (!dir.isDirectory()) {
-                    return
-                }
-                dir.eachFileRecurse { File file ->
-                    CtClass ctClass = pool.get("android.widget.TextView")
-                    if (ctClass != null) {
-
-                        if (ctClass.isFrozen()) {
-                            ctClass.defrost()
-                        }
-
-                        ctClass.setSuperclass(pool.get("com.warm.app_plugin.MyView"))
-                        ctClass.writeFile()
-
-                        ctClass.detach()
-                    }
-
-                }
-
-                // 获取output目录
-                def dest = transformInvocation.outputProvider.getContentLocation(it.name,
-                        it.contentTypes, it.scopes,
-                        Format.DIRECTORY)
-                ctClass.setSuperclass(pool.get("com.warm.app_plugin.MyView"))
-                // 将input的目录复制到output指定目录
-                FileUtils.copyDirectory(it.file, dest)
-            }
-        }
+        outputProvider.deleteAll()
 
         ClassPool pool = ClassPool.getDefault()
-        classPathList.each {
-            try {
-                pool.removeClassPath(it)
-            } catch (Exception e) {
-                project.logger.error(e.getMessage())
+        pool.appendClassPath(mProject.android.bootClasspath[0].toString())
+
+        Map<String, String> dirMap = new HashMap<>();
+        Map<String, String> jarMap = new HashMap<>();
+
+        inputs.each { TransformInput input ->
+            input.jarInputs.each {
+                def classPath = new JarClassPath(it.file.absolutePath)
+                pool.appendClassPath(classPath)
+
+                // 重命名输出文件
+                String jarName = jarInput.getName();
+                String md5Name = DigestUtils.md5Hex(jarInput.getFile().getAbsolutePath());
+                if (jarName.endsWith(".jar")) {
+                    jarName = jarName.substring(0, jarName.length() - 4);
+                }
+                //生成输出路径
+                File dest = outputProvider.getContentLocation(jarName + md5Name,
+                        it.getContentTypes(), it.getScopes(), Format.JAR);
+                jarMap.put(it.file.absolutePath,dest)
+
+            }
+
+
+            input.directoryInputs.each {
+                pool.appendClassPath(it.file.absolutePath)
+
+                // 获取output目录
+                File dest = outputProvider.getContentLocation(it.name,
+                        it.getContentTypes(), it.getScopes(),
+                        Format.DIRECTORY);
+                dirMap.put(it.file.absolutePath,dest)
             }
         }
-        classPathList.clear()
+
+
+
+        mProject.logger.error "-----transform结束------"
 
     }
 }
