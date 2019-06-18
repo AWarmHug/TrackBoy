@@ -10,8 +10,12 @@ import com.google.common.collect.Sets
 import javassist.ClassPool
 import javassist.CtClass
 import javassist.JarClassPath
+import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
+import org.checkerframework.checker.units.qual.K
 import org.gradle.api.Project
+
+import java.util.function.BiConsumer
 
 class JavassistTransform extends Transform {
     Project mProject
@@ -45,7 +49,7 @@ class JavassistTransform extends Transform {
     @Override
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
         super.transform(transformInvocation)
-        mProject.logger.error "-----transform开始------"
+        println "-----transform开始------"
         def inputs = transformInvocation.inputs
         def outputProvider = transformInvocation.outputProvider
 
@@ -58,23 +62,6 @@ class JavassistTransform extends Transform {
         Map<String, String> jarMap = new HashMap<>();
 
         inputs.each { TransformInput input ->
-            input.jarInputs.each {
-                def classPath = new JarClassPath(it.file.absolutePath)
-                pool.appendClassPath(classPath)
-
-                // 重命名输出文件
-                String jarName = jarInput.getName();
-                String md5Name = DigestUtils.md5Hex(jarInput.getFile().getAbsolutePath());
-                if (jarName.endsWith(".jar")) {
-                    jarName = jarName.substring(0, jarName.length() - 4);
-                }
-                //生成输出路径
-                File dest = outputProvider.getContentLocation(jarName + md5Name,
-                        it.getContentTypes(), it.getScopes(), Format.JAR);
-                jarMap.put(it.file.absolutePath,dest)
-
-            }
-
 
             input.directoryInputs.each {
                 pool.appendClassPath(it.file.absolutePath)
@@ -83,13 +70,43 @@ class JavassistTransform extends Transform {
                 File dest = outputProvider.getContentLocation(it.name,
                         it.getContentTypes(), it.getScopes(),
                         Format.DIRECTORY);
-                dirMap.put(it.file.absolutePath,dest)
+                dirMap.put(it.file.absolutePath, dest.absolutePath)
+
             }
+
+            input.jarInputs.each {
+//                def classPath = new JarClassPath(it.file.absolutePath)
+                pool.appendClassPath(it.file.absolutePath)
+
+                // 重命名输出文件
+                String jarName = it.name;
+                String md5Name = DigestUtils.md5Hex(it.file.absolutePath);
+                if (jarName.endsWith(".jar")) {
+                    jarName = jarName.substring(0, jarName.length() - 4);
+                }
+                //生成输出路径
+                File dest = outputProvider.getContentLocation(jarName + md5Name,
+                        it.getContentTypes(), it.getScopes(), Format.JAR);
+                jarMap.put(it.file.absolutePath, dest.absolutePath)
+
+            }
+
         }
 
+        println("-----处理Dir开始-----")
+        dirMap.each {
+            Inject.injectDir(pool, it.key, it.value)
+        }
+        println("-----处理Dir结束-----")
+
+        println("-----处理Jar开始-----")
+        jarMap.each {
+            Inject.injectJar(pool, it.key, it.value)
+        }
+        println("-----处理Jar结束-----")
 
 
-        mProject.logger.error "-----transform结束------"
+        println "-----transform结束------"
 
     }
 }

@@ -22,7 +22,20 @@ public class MyView extends View {
 
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(l);
-        Log.d("**********", "setOnClickListener: 我的点击事件");
+        super.setOnClickListener(new OnClickListenerProxy(l));
+    }
+
+    class OnClickListenerProxy implements OnClickListener {
+        OnClickListener l;
+
+        OnClickListenerProxy(OnClickListener l) {
+            this.l = l;
+        }
+
+        @Override
+        public void onClick(View v) {
+            l.onClick(v);
+            Log.d("**********", "setOnClickListener: 我的点击事件");
+        }
     }
 }
