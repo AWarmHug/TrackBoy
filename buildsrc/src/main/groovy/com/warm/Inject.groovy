@@ -1,15 +1,15 @@
 package com.warm
 
+
 import com.google.common.io.Files
 import javassist.ClassPool
-import javassist.CtClass
 import org.apache.commons.io.FileUtils
+import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
-import sun.tools.jar.resources.jar
-import com.warm.Utils
-import java.util.jar.JarFile
-import java.util.zip.ZipFile
 
+import java.util.jar.JarFile
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 class Inject {
     static injectDir(ClassPool pool, String absolutePath, String dest) {
@@ -25,7 +25,7 @@ class Inject {
                 if (it.isFile()) {
                     File out = new File(dest + filePath.substring(absolutePath.length()))
                     Files.createParentDirs(out)
-                    if (filePath.endsWith(".class") && !filePath.contains('R$') && !filePath.contains('R.class') && !filePath.contains('$') && !filePath.contains('BuildConfig.class')) {
+                    if (filePath.endsWith(".class") && !filePath.contains('R$') && !filePath.contains('R.class') && !filePath.contains('BuildConfig.class')) {
                         if (filePath.contains("ItemView")) {
 
                             def itemViewCtClass = pool.get("com.warm.app_plugin.ItemView")
@@ -34,6 +34,7 @@ class Inject {
                             }
                             itemViewCtClass.superclass = pool.get("com.warm.app_plugin.MyView");
                             itemViewCtClass.writeFile(dest)
+                            itemViewCtClass.detach()
                         } else {
                             FileUtils.copyFile(it, out)
                         }
@@ -53,28 +54,49 @@ class Inject {
         println "------------------"
         Files.createParentDirs(new File(dest))
 
-        def jarFile = new JarFile(absolutePath)
+//        ZipInputStream zis = new ZipInputStream(new FileInputStream(absolutePath))
 
-        def enumeration = jarFile.entries();
+        ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(dest));
+
+
+        def inJarFile = new JarFile(absolutePath)
+
+
+        def enumeration = inJarFile.entries();
 
         while (enumeration.hasMoreElements()) {
             def jarEntry = enumeration.nextElement()
+            if (jarEntry == null) {
+                continue
+            }
             def entryName = jarEntry.name
-            if (!jarEntry.isDirectory() && entryName.endsWith(".class") && !entryName.contains('R$') && !entryName.contains('R.class') && !entryName.contains('$') && !entryName.contains('BuildConfig.class')) {
-                ClassReader reader = new ClassReader(jarFile.getInputStream(jarEntry))
+
+            zos.putNextEntry(new ZipEntry(entryName))
+
+            if (!jarEntry.isDirectory() && entryName.endsWith(".class") && !entryName.contains('R$') && !entryName.contains('R.class') && !entryName.contains('BuildConfig.class')) {
+                ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
+                println "-----------${reader.className}----------"
                 String superClassName = Utils.getClassName(reader.superName)
                 if (superClassName == "android.view.View") {
-                    def itemViewCtClass = pool.get(reader.className)
-                    if (itemViewCtClass.isFrozen()) {
-                        itemViewCtClass.defrost()
+                    def itemViewCtClass = pool.get(Utils.getClassName(reader.className))
+                    if (itemViewCtClass != null) {
+                        if (itemViewCtClass.isFrozen()) {
+                            itemViewCtClass.defrost()
+                        }
+                        itemViewCtClass.superclass = pool.get("com.warm.app_plugin.MyView")
+                        zos.write(itemViewCtClass.toBytecode())
+                        IOUtils.write(itemViewCtClass.toBytecode(),zos)
+                        itemViewCtClass.detach()
                     }
-                    itemViewCtClass.superclass = pool.get("com.warm.app_plugin.MyView")
-                    itemViewCtClass.writeFile()
+                } else {
+                    IOUtils.copy(inJarFile.getInputStream(jarEntry), zos)
                 }
+            } else {
+                IOUtils.copy(inJarFile.getInputStream(jarEntry), zos)
             }
         }
-
-        FileUtils.copyFile(new File(absolutePath), new File(dest))
+//        zis.close()
+        zos.close()
 
     }
 

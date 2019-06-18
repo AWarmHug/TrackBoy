@@ -1,21 +1,11 @@
 package com.warm
 
-import com.android.build.api.transform.Format
-import com.android.build.api.transform.QualifiedContent
-import com.android.build.api.transform.Transform
-import com.android.build.api.transform.TransformException
-import com.android.build.api.transform.TransformInput
-import com.android.build.api.transform.TransformInvocation
+import com.android.build.api.transform.*
 import com.google.common.collect.Sets
 import javassist.ClassPool
-import javassist.CtClass
 import javassist.JarClassPath
 import org.apache.commons.codec.digest.DigestUtils
-import org.apache.commons.io.FileUtils
-import org.checkerframework.checker.units.qual.K
 import org.gradle.api.Project
-
-import java.util.function.BiConsumer
 
 class JavassistTransform extends Transform {
     Project mProject
@@ -62,7 +52,6 @@ class JavassistTransform extends Transform {
         Map<String, String> jarMap = new HashMap<>();
 
         inputs.each { TransformInput input ->
-
             input.directoryInputs.each {
                 pool.appendClassPath(it.file.absolutePath)
 
@@ -75,8 +64,8 @@ class JavassistTransform extends Transform {
             }
 
             input.jarInputs.each {
-//                def classPath = new JarClassPath(it.file.absolutePath)
-                pool.appendClassPath(it.file.absolutePath)
+                def classPath = new JarClassPath(it.file.absolutePath)
+                pool.appendClassPath(classPath)
 
                 // 重命名输出文件
                 String jarName = it.name;
@@ -93,17 +82,25 @@ class JavassistTransform extends Transform {
 
         }
 
-        println("-----处理Dir开始-----")
-        dirMap.each {
-            Inject.injectDir(pool, it.key, it.value)
-        }
-        println("-----处理Dir结束-----")
+        try {
+            println("-----处理Dir开始-----")
+            dirMap.each {
+                Inject.injectDir(pool, it.key, it.value)
+            }
+            println("-----处理Dir结束-----")
+        } catch (Exception e) {
 
-        println("-----处理Jar开始-----")
-        jarMap.each {
-            Inject.injectJar(pool, it.key, it.value)
         }
-        println("-----处理Jar结束-----")
+
+        try {
+            println("-----处理Jar开始-----")
+            jarMap.each {
+                Inject.injectJar(pool, it.key, it.value)
+            }
+            println("-----处理Jar结束-----")
+        } catch (Exception e) {
+
+        }
 
 
         println "-----transform结束------"
