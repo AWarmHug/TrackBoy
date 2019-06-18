@@ -6,7 +6,7 @@ import javassist.CtClass
 import org.apache.commons.io.FileUtils
 import org.objectweb.asm.ClassReader
 import sun.tools.jar.resources.jar
-
+import com.warm.Utils
 import java.util.jar.JarFile
 import java.util.zip.ZipFile
 
@@ -61,19 +61,17 @@ class Inject {
             def jarEntry = enumeration.nextElement()
             def entryName = jarEntry.name
             if (!jarEntry.isDirectory() && entryName.endsWith(".class") && !entryName.contains('R$') && !entryName.contains('R.class') && !entryName.contains('$') && !entryName.contains('BuildConfig.class')) {
-                ClassReader reader = new ClassReader(jarFile.getInputStream(jarEntry));
-                if (reader.superName == "android/view/View"){
+                ClassReader reader = new ClassReader(jarFile.getInputStream(jarEntry))
+                String superClassName = Utils.getClassName(reader.superName)
+                if (superClassName == "android.view.View") {
                     def itemViewCtClass = pool.get(reader.className)
                     if (itemViewCtClass.isFrozen()) {
                         itemViewCtClass.defrost()
                     }
                     itemViewCtClass.superclass = pool.get("com.warm.app_plugin.MyView")
                     itemViewCtClass.writeFile()
-                }else {
-
                 }
             }
-
         }
 
         FileUtils.copyFile(new File(absolutePath), new File(dest))
