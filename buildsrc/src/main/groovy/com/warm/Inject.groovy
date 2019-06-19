@@ -26,9 +26,12 @@ class Inject {
                     File out = new File(dest + filePath.substring(absolutePath.length()))
                     Files.createParentDirs(out)
                     if (filePath.endsWith(".class") && !filePath.contains('R$') && !filePath.contains('R.class') && !filePath.contains('BuildConfig.class')) {
-                        if (filePath.contains("ItemView")) {
+                        ClassReader reader = new ClassReader(new FileInputStream(filePath))
+                        String superClassName = Utils.getClassName(reader.superName)
 
-                            def itemViewCtClass = pool.get("com.warm.app_plugin.ItemView")
+                        if (superClassName == View.class.name) {
+
+                            def itemViewCtClass = pool.get(Utils.getClassName(reader.className))
                             if (itemViewCtClass.isFrozen()) {
                                 itemViewCtClass.defrost()
                             }
@@ -83,9 +86,8 @@ class Inject {
                         if (itemViewCtClass.isFrozen()) {
                             itemViewCtClass.defrost()
                         }
-                        itemViewCtClass.superclass = pool.get("com.warm.app_plugin.MyView")
-                        zos.write(itemViewCtClass.toBytecode())
-                        IOUtils.write(itemViewCtClass.toBytecode(),zos)
+                        itemViewCtClass.superclass = pool.get("com.warm.library_plugin.widget.TView")
+                        IOUtils.write(itemViewCtClass.toBytecode(), zos)
                         itemViewCtClass.detach()
                     }
                 } else {
@@ -97,6 +99,10 @@ class Inject {
         }
 //        zis.close()
         zos.close()
+
+    }
+
+    private static void transformClassBySuperClass(String superClassName) {
 
     }
 

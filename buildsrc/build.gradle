@@ -13,5 +13,5 @@ dependencies {
     implementation 'com.android.tools.build:gradle:3.4.1'
     implementation 'org.javassist:javassist:3.25.0-GA'
     implementation 'com.google.android:android:4.1.1.4'
-    implementation project(':library_plugin')
+//    implementation project(':library_plugin')
 }
