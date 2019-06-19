@@ -10,6 +10,7 @@ class MyPlugin implements Plugin<Project> {
     void apply(Project project) {
         println "------TrackPlugin开始工作-----"
         project.android.registerTransform(new JavassistTransform(project))
+        println "------TrackPlugin结束工作-----"
     }
 }
 

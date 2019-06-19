@@ -3,9 +3,13 @@ package com.warm
 import com.android.build.api.transform.*
 import com.google.common.collect.Sets
 import javassist.ClassPool
+import javassist.CtClass
 import javassist.JarClassPath
 import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Project
+import org.objectweb.asm.ClassReader
+
+import java.util.jar.JarFile
 
 class JavassistTransform extends Transform {
     Project mProject
@@ -82,6 +86,48 @@ class JavassistTransform extends Transform {
 
         }
 
+        dirMap.each {
+            if (it.key.contains("com${File.separator}warm${File.separator}library_plugin${File.separator}widget")) {
+                File file = new File(it.key)
+                if (file.isFile()) {
+                    ClassReader reader = new ClassReader(new FileInputStream(file))
+                    CtClass ctClass = pool.get(Utils.getClassName(reader.className));
+                    Inject.clazz.put(ctClass.superclass.name, ctClass.name)
+                    if (ctClass.superclass.name.contains("AppCompat")) {
+                        Inject.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
+                    }
+                }
+            }
+        }
+
+
+        jarMap.each {
+
+            def inJarFile = new JarFile(it.key)
+
+
+            def enumeration = inJarFile.entries();
+
+            while (enumeration.hasMoreElements()) {
+                def jarEntry = enumeration.nextElement()
+                if (jarEntry == null) {
+                    continue
+                }
+                def entryName = jarEntry.name
+
+                if (entryName.contains("com${File.separator}warm${File.separator}library_plugin${File.separator}widget")) {
+                    ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
+                    CtClass ctClass = pool.get(Utils.getClassName(reader.className));
+                    Inject.clazz.put(ctClass.superclass.name, ctClass.name)
+                    if (ctClass.superclass.name.contains("AppCompat")) {
+                        Inject.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
+                    }
+
+                }
+            }
+        }
+
+
         println("-----处理Dir开始-----")
         dirMap.each {
             Inject.injectDir(pool, it.key, it.value)
@@ -99,4 +145,6 @@ class JavassistTransform extends Transform {
         println "-----transform结束------"
 
     }
+
+
 }

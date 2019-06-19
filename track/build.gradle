@@ -1,10 +1,31 @@
-apply plugin: 'java-library'
+apply plugin: 'com.android.library'
 
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.google.android:android:4.1.1.4'
     testImplementation 'junit:junit:4.12'
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
