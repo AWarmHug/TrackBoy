@@ -44,11 +44,11 @@ class Inject {
                             }
                             itemViewCtClass.superclass = pool.get(value);
                             itemViewCtClass.writeFile(dest)
+//                            IOUtils.write(itemViewCtClass.toBytecode(),new FileOutputStream(dest + filePath.substring(absolutePath.length())))
                             itemViewCtClass.detach()
                         } else {
                             FileUtils.copyFile(file, out)
                         }
-
                     } else {
                         FileUtils.copyFile(file, out)
                     }

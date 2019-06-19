@@ -1,5 +1,6 @@
 package com.warm.library_plugin.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -19,6 +20,7 @@ public class TLinearLayout extends LinearLayout {
         super(context, attrs);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public TLinearLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
