@@ -1,5 +1,4 @@
-# TrackBoy
-使用AspectJ实现AOP无痕埋点初步尝试
+无痕埋点实现方案的初步尝试
 
 #### 需求和解决方案分析
 
@@ -53,7 +52,7 @@ public static void onEvent(Context context, String eventID, String label);
    public class ViewCore extends BaseCore {
    
        /**
-        * 这是自定义注解的切点，如果在方法上加入了{@link com.warm.trackboy.annotation.Event},就认定是一个切点
+        * 这是自定义注解的切点，如果在方法上加入了{@link Event},就认定是一个切点
         */
        @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
        public void method() {

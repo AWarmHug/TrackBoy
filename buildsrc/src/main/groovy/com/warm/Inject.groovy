@@ -1,6 +1,6 @@
 package com.warm
 
-
+import android.view.View
 import com.google.common.io.Files
 import javassist.ClassPool
 import org.apache.commons.io.FileUtils
@@ -77,7 +77,7 @@ class Inject {
                 ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
                 println "-----------${reader.className}----------"
                 String superClassName = Utils.getClassName(reader.superName)
-                if (superClassName == "android.view.View") {
+                if (superClassName == View.class.name) {
                     def itemViewCtClass = pool.get(Utils.getClassName(reader.className))
                     if (itemViewCtClass != null) {
                         if (itemViewCtClass.isFrozen()) {

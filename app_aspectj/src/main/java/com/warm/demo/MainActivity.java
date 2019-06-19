@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,9 +13,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.warm.demo.databinding.ActivityBinding;
 import com.warm.demo.detail.DetailActivity;
-import com.warm.trackboy.Data;
-import com.warm.trackboy.Track;
-import com.warm.trackboy.annotation.Event;
+import com.warm.track.annotation.Event;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityBinding mBinding;

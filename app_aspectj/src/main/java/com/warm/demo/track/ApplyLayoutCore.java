@@ -6,11 +6,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.warm.demo.R;
-import com.warm.trackboy.BuildConfig;
-import com.warm.trackboy.Data;
-import com.warm.trackboy.Trace;
-import com.warm.trackboy.core.BaseCore;
-import com.warm.trackboy.utils.Utils;
+import com.warm.library_aspectj.BaseCore;
+import com.warm.library_aspectj.BuildConfig;
+import com.warm.track.Data;
+import com.warm.track.Trace;
+import com.warm.track.annotation.Event;
+import com.warm.track.utils.Utils;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -21,9 +22,9 @@ import org.aspectj.lang.annotation.Pointcut;
 public class ApplyLayoutCore extends BaseCore {
 
     /**
-     * 这是自定义注解的切点，如果在方法上加入了{@link com.warm.trackboy.annotation.Event},就认定是一个切点
+     * 这是自定义注解的切点，如果在方法上加入了{@link Event},就认定是一个切点
      */
-    @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
+    @Pointcut("execution(@com.warm.track.annotation.Event * *(..))")
     public void method() {
 
     }

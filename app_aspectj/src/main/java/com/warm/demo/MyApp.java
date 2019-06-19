@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.view.View;
 
 import com.warm.demo.detail.DetailActivity;
-import com.warm.trackboy.Data;
-import com.warm.trackboy.Track;
+import com.warm.track.Data;
+import com.warm.track.Track;
 
 public class MyApp extends Application {
     @Override

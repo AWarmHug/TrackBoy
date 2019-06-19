@@ -82,25 +82,18 @@ class JavassistTransform extends Transform {
 
         }
 
-        try {
-            println("-----处理Dir开始-----")
-            dirMap.each {
-                Inject.injectDir(pool, it.key, it.value)
-            }
-            println("-----处理Dir结束-----")
-        } catch (Exception e) {
-
+        println("-----处理Dir开始-----")
+        dirMap.each {
+            Inject.injectDir(pool, it.key, it.value)
         }
+        println("-----处理Dir结束-----")
 
-        try {
-            println("-----处理Jar开始-----")
-            jarMap.each {
-                Inject.injectJar(pool, it.key, it.value)
-            }
-            println("-----处理Jar结束-----")
-        } catch (Exception e) {
 
+        println("-----处理Jar开始-----")
+        jarMap.each {
+            Inject.injectJar(pool, it.key, it.value)
         }
+        println("-----处理Jar结束-----")
 
 
         println "-----transform结束------"

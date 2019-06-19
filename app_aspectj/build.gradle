@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.warm.demo"
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -40,6 +40,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     api project(path: ':library_aspectj')
+    implementation project(path: ':track')
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'android.arch.work:work-runtime:1.0.1'
 
 }

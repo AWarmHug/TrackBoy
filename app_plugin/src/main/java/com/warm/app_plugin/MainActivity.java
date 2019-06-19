@@ -1,6 +1,8 @@
 package com.warm.app_plugin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -19,5 +21,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("**************", "onClick: ssss");
             }
         });
+    }
+
+    @NonNull
+    @Override
+    public AppCompatDelegate getDelegate() {
+        return super.getDelegate();
     }
 }
