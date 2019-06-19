@@ -32,7 +32,7 @@ class Inject {
                             if (itemViewCtClass.isFrozen()) {
                                 itemViewCtClass.defrost()
                             }
-                            itemViewCtClass.superclass = pool.get("com.warm.app_plugin.MyView");
+                            itemViewCtClass.superclass = pool.get("com.warm.library_plugin.widget.TView");
                             itemViewCtClass.writeFile(dest)
                             itemViewCtClass.detach()
                         } else {

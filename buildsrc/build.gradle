@@ -1,15 +1,17 @@
 apply plugin: 'groovy'
 
+repositories {
+    mavenCentral()
+    jcenter()
+    google()
+}
+
+
 dependencies {
     compile gradleApi() //gradle sdk
     compile localGroovy() //groovy sdk
-    compile 'com.android.tools.build:gradle:3.4.1'
-    compile 'org.javassist:javassist:3.25.0-GA'
-    compile 'com.google.android:android:4.1.1.4'
-//    compile project(path: ':library_plugin')
-}
-
-repositories {
-    jcenter()
-    google()
+    implementation 'com.android.tools.build:gradle:3.4.1'
+    implementation 'org.javassist:javassist:3.25.0-GA'
+    implementation 'com.google.android:android:4.1.1.4'
+    implementation project(':library_plugin')
 }
