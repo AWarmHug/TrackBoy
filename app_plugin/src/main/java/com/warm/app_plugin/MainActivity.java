@@ -21,6 +21,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("**************", "onClick: ssss");
             }
         });
+        findViewById(R.id.line).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("**************", "onClick: ssss");
+            }
+        });
     }
 
     @NonNull

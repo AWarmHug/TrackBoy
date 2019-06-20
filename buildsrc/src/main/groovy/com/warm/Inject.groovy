@@ -13,6 +13,8 @@ import java.util.zip.ZipOutputStream
 
 class Inject {
 
+    public static final String PACKAGE_WIDGET="com/warm/library_plugin/widget";
+
     public static final String without = "com/warm/library_plugin"
 
     public static Map<String, String> clazz = new HashMap<>()

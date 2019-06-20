@@ -87,7 +87,7 @@ class JavassistTransform extends Transform {
         }
 
         dirMap.each {
-            if (it.key.contains("com/warm/library_plugin/widget")) {
+            if (it.key.contains(Inject.PACKAGE_WIDGET)) {
                 File file = new File(it.key)
                 ClassReader reader = new ClassReader(new FileInputStream(file))
                 CtClass ctClass = pool.get(Utils.getClassName(reader.className));
@@ -113,7 +113,7 @@ class JavassistTransform extends Transform {
                     continue
                 }
                 def entryName = jarEntry.name
-                if (!jarEntry.isDirectory()&&entryName.contains("com/warm/library_plugin/widget")) {
+                if (!jarEntry.isDirectory() && entryName.contains(Inject.PACKAGE_WIDGET)) {
                     ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
                     CtClass ctClass = pool.get(Utils.getClassName(reader.className));
                     Inject.clazz.put(ctClass.superclass.name, ctClass.name)
