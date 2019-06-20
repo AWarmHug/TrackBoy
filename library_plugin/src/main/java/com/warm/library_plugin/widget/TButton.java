@@ -2,13 +2,14 @@ package com.warm.library_plugin.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.warm.library_plugin.proxy.OnClickListenerProxy;
 
-public class TButton extends AppCompatButton {
+public class TButton extends Button {
     public TButton(Context context) {
         super(context);
     }

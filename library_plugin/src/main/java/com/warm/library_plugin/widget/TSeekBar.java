@@ -2,6 +2,7 @@ package com.warm.library_plugin.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.SeekBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -9,7 +10,7 @@ import androidx.appcompat.widget.AppCompatSeekBar;
 
 import com.warm.library_plugin.proxy.OnClickListenerProxy;
 
-public class TSeekBar extends AppCompatSeekBar {
+public class TSeekBar extends SeekBar {
     public TSeekBar(Context context) {
         super(context);
     }

@@ -2,6 +2,7 @@ package com.warm.library_plugin.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.CheckedTextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckedTextView;
@@ -9,7 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.warm.library_plugin.proxy.OnClickListenerProxy;
 
-public class TCheckedTextView extends AppCompatCheckedTextView {
+public class TCheckedTextView extends CheckedTextView {
     public TCheckedTextView(Context context) {
         super(context);
     }

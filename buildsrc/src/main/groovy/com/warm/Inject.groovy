@@ -13,14 +13,15 @@ import java.util.zip.ZipOutputStream
 
 class Inject {
 
-    public static final String without = "com${File.separator}warm${File.separator}library_plugin"
+    public static final String without = "com/warm/library_plugin"
 
     public static Map<String, String> clazz = new HashMap<>()
 
     static injectDir(ClassPool pool, String absolutePath, String dest) {
 
         println "------------------"
-        println("absolutePath=${absolutePath},dest=${dest}")
+        println("absolutePath=${absolutePath}")
+        println "dest=${dest}"
 
         File dir = new File(absolutePath);
 
@@ -61,10 +62,10 @@ class Inject {
 
     static injectJar(ClassPool pool, String absolutePath, String dest) {
         println "------------------"
-        println("absolutePath=${absolutePath},dest=${dest}")
-        println "------------------"
-        Files.createParentDirs(new File(dest))
+        println "absolutePath=${absolutePath}"
+        println "dest=${dest}"
 
+        Files.createParentDirs(new File(dest))
 //        ZipInputStream zis = new ZipInputStream(new FileInputStream(absolutePath))
 
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(dest));
@@ -86,7 +87,6 @@ class Inject {
 
             if (!jarEntry.isDirectory() && entryName.endsWith(".class") && !entryName.contains('R$') && !entryName.contains('R.class') && !entryName.contains('BuildConfig.class') && !entryName.contains(without)) {
                 ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
-                println "-----------${reader.className}----------"
                 String superClassName = Utils.getClassName(reader.superName)
 
                 String value = clazz.get(superClassName)

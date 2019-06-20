@@ -87,14 +87,14 @@ class JavassistTransform extends Transform {
         }
 
         dirMap.each {
-            if (it.key.contains("com${File.separator}warm${File.separator}library_plugin${File.separator}widget")) {
+            if (it.key.contains("com/warm/library_plugin/widget")) {
                 File file = new File(it.key)
                 ClassReader reader = new ClassReader(new FileInputStream(file))
                 CtClass ctClass = pool.get(Utils.getClassName(reader.className));
                 Inject.clazz.put(ctClass.superclass.name, ctClass.name)
-                if (ctClass.superclass.name.contains("AppCompat")) {
-                    Inject.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
-                }
+//                if (ctClass.superclass.name.contains("AppCompat")) {
+//                    Inject.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
+//                }
 
             }
         }
@@ -113,14 +113,13 @@ class JavassistTransform extends Transform {
                     continue
                 }
                 def entryName = jarEntry.name
-
-                if (entryName.contains("com${File.separator}warm${File.separator}library_plugin${File.separator}widget")) {
+                if (!jarEntry.isDirectory()&&entryName.contains("com/warm/library_plugin/widget")) {
                     ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
                     CtClass ctClass = pool.get(Utils.getClassName(reader.className));
                     Inject.clazz.put(ctClass.superclass.name, ctClass.name)
-                    if (ctClass.superclass.name.contains("AppCompat")) {
-                        Inject.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
-                    }
+//                    if (ctClass.superclass.name.contains("AppCompat")) {
+//                        Inject.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
+//                    }
 
                 }
             }

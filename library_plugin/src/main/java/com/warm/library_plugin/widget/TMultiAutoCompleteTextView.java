@@ -2,6 +2,7 @@ package com.warm.library_plugin.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.MultiAutoCompleteTextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -9,7 +10,7 @@ import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView;
 
 import com.warm.library_plugin.proxy.OnClickListenerProxy;
 
-public class TMultiAutoCompleteTextView extends AppCompatMultiAutoCompleteTextView {
+public class TMultiAutoCompleteTextView extends MultiAutoCompleteTextView {
     public TMultiAutoCompleteTextView(Context context) {
         super(context);
     }

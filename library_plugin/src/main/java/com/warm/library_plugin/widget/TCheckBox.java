@@ -2,6 +2,7 @@ package com.warm.library_plugin.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.CheckBox;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -9,7 +10,7 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 
 import com.warm.library_plugin.proxy.OnClickListenerProxy;
 
-public class TCheckBox extends AppCompatCheckBox {
+public class TCheckBox extends CheckBox {
     public TCheckBox(Context context) {
         super(context);
     }

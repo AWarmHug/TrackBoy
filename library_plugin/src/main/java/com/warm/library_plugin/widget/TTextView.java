@@ -2,13 +2,14 @@ package com.warm.library_plugin.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.warm.library_plugin.proxy.OnClickListenerProxy;
 
-public class TTextView extends AppCompatTextView {
+public class TTextView extends TextView {
     public TTextView(Context context) {
         super(context);
     }
