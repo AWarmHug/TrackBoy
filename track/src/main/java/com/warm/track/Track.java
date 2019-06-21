@@ -35,7 +35,7 @@ public class Track {
         if (view.getParent() instanceof ViewGroup) {
             ViewGroup parent = (ViewGroup) view.getParent();
             while (parent != null && parent.getId() != android.R.id.content) {
-                appendName(sb,view);
+                appendName(sb,parent);
                 if (parent instanceof ViewGroup) {
                     parent = (ViewGroup) parent.getParent();
                 } else {

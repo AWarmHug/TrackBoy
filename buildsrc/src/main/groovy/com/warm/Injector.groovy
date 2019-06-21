@@ -11,7 +11,7 @@ import java.util.jar.JarFile
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
-class Inject {
+class Injector {
 
     public static final String PACKAGE_WIDGET="com/warm/library_plugin/widget";
 

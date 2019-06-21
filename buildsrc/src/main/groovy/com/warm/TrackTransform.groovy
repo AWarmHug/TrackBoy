@@ -11,16 +11,16 @@ import org.objectweb.asm.ClassReader
 
 import java.util.jar.JarFile
 
-class JavassistTransform extends Transform {
+class TrackTransform extends Transform {
     Project mProject
 
-    JavassistTransform(Project project) {
+    TrackTransform(Project project) {
         mProject = project
     }
 
     @Override
     String getName() {
-        return "JavassistTransform"
+        return "TrackTransform"
     }
 
     @Override
@@ -87,13 +87,13 @@ class JavassistTransform extends Transform {
         }
 
         dirMap.each {
-            if (it.key.contains(Inject.PACKAGE_WIDGET)) {
+            if (it.key.contains(Injector.PACKAGE_WIDGET)) {
                 File file = new File(it.key)
                 ClassReader reader = new ClassReader(new FileInputStream(file))
                 CtClass ctClass = pool.get(Utils.getClassName(reader.className));
-                Inject.clazz.put(ctClass.superclass.name, ctClass.name)
+                Injector.clazz.put(ctClass.superclass.name, ctClass.name)
 //                if (ctClass.superclass.name.contains("AppCompat")) {
-//                    Inject.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
+//                    Injector.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
 //                }
 
             }
@@ -113,33 +113,33 @@ class JavassistTransform extends Transform {
                     continue
                 }
                 def entryName = jarEntry.name
-                if (!jarEntry.isDirectory() && entryName.contains(Inject.PACKAGE_WIDGET)) {
+                if (!jarEntry.isDirectory() && entryName.contains(Injector.PACKAGE_WIDGET)) {
                     ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
                     CtClass ctClass = pool.get(Utils.getClassName(reader.className));
-                    Inject.clazz.put(ctClass.superclass.name, ctClass.name)
+                    Injector.clazz.put(ctClass.superclass.name, ctClass.name)
 //                    if (ctClass.superclass.name.contains("AppCompat")) {
-//                        Inject.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
+//                        Injector.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
 //                    }
 
                 }
             }
         }
 
-        println Inject.clazz.toMapString()
+        println Injector.clazz.toMapString()
 
-        println Inject.clazz.size()
+        println Injector.clazz.size()
 
 
         println("-----处理Dir开始-----")
         dirMap.each {
-            Inject.injectDir(pool, it.key, it.value)
+            Injector.injectDir(pool, it.key, it.value)
         }
         println("-----处理Dir结束-----")
 
 
         println("-----处理Jar开始-----")
         jarMap.each {
-            Inject.injectJar(pool, it.key, it.value)
+            Injector.injectJar(pool, it.key, it.value)
         }
         println("-----处理Jar结束-----")
 
