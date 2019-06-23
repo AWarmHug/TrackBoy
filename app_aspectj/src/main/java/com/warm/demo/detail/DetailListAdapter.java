@@ -33,7 +33,6 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
             @Override
             public void onClick(View v) {
                 Toast.makeText(holder.itemView.getContext(), "点击了" + nameList.get(position), Toast.LENGTH_SHORT).show();
-
             }
         });
     }

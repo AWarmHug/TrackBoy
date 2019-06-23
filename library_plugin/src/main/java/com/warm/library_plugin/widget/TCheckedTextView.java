@@ -5,10 +5,8 @@ import android.util.AttributeSet;
 import android.widget.CheckedTextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatCheckedTextView;
-import androidx.appcompat.widget.AppCompatTextView;
 
-import com.warm.library_plugin.proxy.OnClickListenerProxy;
+import com.warm.track.proxy.OnClickListenerProxy;
 
 public class TCheckedTextView extends CheckedTextView {
     public TCheckedTextView(Context context) {

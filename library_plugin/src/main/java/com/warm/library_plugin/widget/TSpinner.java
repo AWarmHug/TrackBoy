@@ -5,10 +5,8 @@ import android.util.AttributeSet;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatSpinner;
 
-import com.warm.library_plugin.proxy.OnClickListenerProxy;
+import com.warm.track.proxy.OnClickListenerProxy;
 
 public class TSpinner extends Spinner {
     public TSpinner(Context context) {

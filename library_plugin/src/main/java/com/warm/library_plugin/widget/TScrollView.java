@@ -8,7 +8,7 @@ import android.widget.ScrollView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.warm.library_plugin.proxy.OnClickListenerProxy;
+import com.warm.track.proxy.OnClickListenerProxy;
 
 public class TScrollView extends ScrollView {
     public TScrollView(Context context) {

@@ -3,6 +3,8 @@ package com.warm.track;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 public class Track {
 
 
@@ -57,8 +59,13 @@ public class Track {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
             sb.append("$");
             sb.append(view.getClass().getSimpleName())
-                    .append(":")
-                    .append(viewGroup.indexOfChild(view));
+                    .append(":");
+            if (viewGroup instanceof RecyclerView){
+                sb.append(((RecyclerView)viewGroup).getChildAdapterPosition(view));
+            }else {
+                sb.append(viewGroup.indexOfChild(view));
+            }
+
         }
     }
 

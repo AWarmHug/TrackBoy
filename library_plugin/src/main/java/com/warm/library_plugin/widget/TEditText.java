@@ -5,10 +5,8 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
 
-import com.warm.library_plugin.proxy.OnClickListenerProxy;
+import com.warm.track.proxy.OnClickListenerProxy;
 
 public class TEditText extends EditText {
     public TEditText(Context context) {

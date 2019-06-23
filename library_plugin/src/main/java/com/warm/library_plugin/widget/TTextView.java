@@ -5,9 +5,8 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatTextView;
 
-import com.warm.library_plugin.proxy.OnClickListenerProxy;
+import com.warm.track.proxy.OnClickListenerProxy;
 
 public class TTextView extends TextView {
     public TTextView(Context context) {

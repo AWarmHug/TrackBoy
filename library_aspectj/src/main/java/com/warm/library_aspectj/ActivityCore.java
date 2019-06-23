@@ -15,13 +15,13 @@ import org.aspectj.lang.annotation.Pointcut;
 public class ActivityCore extends BaseCore {
 
 
-    @Pointcut("execution(void android.app.Activity.onDestroy(..))")
-    public void onDestroy() {
+    @Pointcut("execution(void android.app.Activity.onCreate(android.os.Bundle))")
+    public void onCreate() {
 
     }
 
-    @After("onDestroy()&&within(android.app.Activity)")
-    public void injectOnDestroy(JoinPoint joinPoint) {
+    @After("onCreate()")
+    public void injectonCreate(JoinPoint joinPoint) {
         Trace trace = Data.getEvent(getName(joinPoint));
         if (trace != null) {
             track(trace.getId(), trace.getValue());

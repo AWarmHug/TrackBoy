@@ -6,7 +6,7 @@ import android.widget.AbsoluteLayout;
 
 import androidx.annotation.Nullable;
 
-import com.warm.library_plugin.proxy.OnClickListenerProxy;
+import com.warm.track.proxy.OnClickListenerProxy;
 
 @Deprecated
 public class TAbsoluteLayout extends AbsoluteLayout {

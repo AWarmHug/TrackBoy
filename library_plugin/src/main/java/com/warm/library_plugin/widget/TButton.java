@@ -5,9 +5,8 @@ import android.util.AttributeSet;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
 
-import com.warm.library_plugin.proxy.OnClickListenerProxy;
+import com.warm.track.proxy.OnClickListenerProxy;
 
 public class TButton extends Button {
     public TButton(Context context) {
@@ -26,5 +25,10 @@ public class TButton extends Button {
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         super.setOnClickListener(new OnClickListenerProxy(l));
+    }
+
+    @Override
+    public boolean performLongClick() {
+        return super.performLongClick();
     }
 }

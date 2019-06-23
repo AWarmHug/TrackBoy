@@ -1,9 +1,9 @@
-package com.warm.library_plugin.proxy;
+package com.warm.track.proxy;
 
 import android.util.Log;
 import android.view.View;
 
-import com.warm.library_plugin.BuildConfig;
+import com.warm.track.BuildConfig;
 import com.warm.track.Data;
 import com.warm.track.Trace;
 import com.warm.track.utils.Utils;

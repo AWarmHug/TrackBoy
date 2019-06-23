@@ -6,13 +6,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 public class ApplyLayout extends LinearLayout {
     private EditText etInfo;
     private Button btApply;
+
+    private OnAppleClickListener mOnAppleClickListener;
+
+
+    public void setOnAppleClickListener(OnAppleClickListener onAppleClickListener) {
+        mOnAppleClickListener = onAppleClickListener;
+    }
 
     public ApplyLayout(Context context) {
         this(context, null);
@@ -30,8 +36,18 @@ public class ApplyLayout extends LinearLayout {
         btApply.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "申请信息：" + etInfo.getText(), Toast.LENGTH_SHORT).show();
+                if (mOnAppleClickListener!=null){
+                    mOnAppleClickListener.onAppleClick(v);
+                }
             }
         });
     }
+
+
+
+
+    public interface OnAppleClickListener{
+        void onAppleClick(View view);
+    }
+
 }

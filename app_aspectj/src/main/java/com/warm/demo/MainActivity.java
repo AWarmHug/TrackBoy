@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -38,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Trace", "onCreate: " + mBinding.kktitle.toString());
         mBinding.kktitle.setOnClickListener(v -> Toast.makeText(this, "标题", Toast.LENGTH_SHORT).show());
-//        TrackView.bind(mBinding.tv, "eventId", "点击", "弹屏");
+//        mBinding.kktitle.setOnLongClickListener(v -> {
+//            Log.d(TAG, "onCreate: sss");
+//        });
+        //        TrackView.bind(mBinding.tv, "eventId", "点击", "弹屏");
         mBinding.tv.setOnClickListener(new View.OnClickListener() {
 
             @Event(eventId = "eventId", value = "点了")
@@ -76,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         mBinding.btThis.setOnClickListener(this::onBtThisClick);
+        Button bt=new Button(this);
+        bt.setText("痛痛痛");
+        bt.setOnClickListener(v -> Toast.makeText(MainActivity.this, "痛痛痛", Toast.LENGTH_SHORT).show());
+        mBinding.line.addView(bt);
+
+        mBinding.applyLayout.setOnAppleClickListener(view -> {
+            Toast.makeText(this, "hhhh", Toast.LENGTH_SHORT).show();
+        });
+
+
     }
     public void onBtThisClick(View view){
         Toast.makeText(MainActivity.this, "onBtThisClick", Toast.LENGTH_SHORT).show();
