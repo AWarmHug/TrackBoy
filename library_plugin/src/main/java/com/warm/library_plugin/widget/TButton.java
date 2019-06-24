@@ -31,4 +31,14 @@ public class TButton extends Button {
     public boolean performLongClick() {
         return super.performLongClick();
     }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
+
+    @Override
+    public void sendAccessibilityEvent(int eventType) {
+        super.sendAccessibilityEvent(eventType);
+    }
 }

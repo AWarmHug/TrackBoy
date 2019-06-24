@@ -1,8 +1,12 @@
 package com.warm.track;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class Track {
@@ -21,6 +25,17 @@ public class Track {
         return mTracker;
     }
 
+    @Nullable
+    public static Activity getActivity(View view) {
+        Context context = view.getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
+    }
 
     public static String getClassName(Class<?> clazz) {
 
@@ -33,11 +48,11 @@ public class Track {
 
     public static String getViewName(View view) {
         StringBuilder sb = new StringBuilder();
-        appendName(sb,view);
+        appendName(sb, view);
         if (view.getParent() instanceof ViewGroup) {
             ViewGroup parent = (ViewGroup) view.getParent();
             while (parent != null && parent.getId() != android.R.id.content) {
-                appendName(sb,parent);
+                appendName(sb, parent);
                 if (parent instanceof ViewGroup) {
                     parent = (ViewGroup) parent.getParent();
                 } else {
@@ -49,7 +64,7 @@ public class Track {
     }
 
 
-    private static void appendName(StringBuilder sb,View view){
+    private static void appendName(StringBuilder sb, View view) {
         if (view.getId() != View.NO_ID) {
             sb.append("$");
             sb.append(view.getClass().getSimpleName())
@@ -60,9 +75,9 @@ public class Track {
             sb.append("$");
             sb.append(view.getClass().getSimpleName())
                     .append(":");
-            if (viewGroup instanceof RecyclerView){
-                sb.append(((RecyclerView)viewGroup).getChildAdapterPosition(view));
-            }else {
+            if (viewGroup instanceof RecyclerView) {
+                sb.append(((RecyclerView) viewGroup).getChildAdapterPosition(view));
+            } else {
                 sb.append(viewGroup.indexOfChild(view));
             }
 
