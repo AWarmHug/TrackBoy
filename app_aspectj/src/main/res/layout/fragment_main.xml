@@ -13,7 +13,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:tag="主页"
-            tools:context=".MainActivity">
+            tools:context=".main.MainActivity">
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -64,15 +64,15 @@
                 android:layout_marginBottom="10dp"
                 android:background="@color/colorAccent" />
 
-            <com.warm.demo.ItemLayout
+            <com.warm.demo.widget.ItemLayout
                 android:id="@+id/item1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></com.warm.demo.ItemLayout>
+                android:layout_height="wrap_content" />
 
-            <com.warm.demo.ItemLayout
+            <com.warm.demo.widget.ItemLayout
                 android:id="@+id/item2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></com.warm.demo.ItemLayout>
+                android:layout_height="wrap_content" />
 
 
             <Button
@@ -87,12 +87,12 @@
                 android:layout_height="wrap_content"
                 android:text="lambda_this" />
 
-            <com.warm.demo.ApplyLayout
+            <com.warm.demo.widget.ApplyLayout
                 android:id="@+id/applyLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.warm.demo.ApplyLayout>
+            </com.warm.demo.widget.ApplyLayout>
         </LinearLayout>
     </ScrollView>
 

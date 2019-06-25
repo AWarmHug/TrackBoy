@@ -1,4 +1,4 @@
-package com.warm.demo;
+package com.warm.demo.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
+import com.warm.demo.R;
 import com.warm.demo.databinding.ItemBinding;
 
 /**

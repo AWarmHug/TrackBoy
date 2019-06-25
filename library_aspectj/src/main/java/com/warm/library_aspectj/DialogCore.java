@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.warm.track.BuildConfig;
 import com.warm.track.Data;
 import com.warm.track.Trace;
 import com.warm.track.utils.Utils;

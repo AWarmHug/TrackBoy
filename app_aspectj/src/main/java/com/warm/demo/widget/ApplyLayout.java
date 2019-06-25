@@ -1,4 +1,4 @@
-package com.warm.demo;
+package com.warm.demo.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+
+import com.warm.demo.R;
 
 public class ApplyLayout extends LinearLayout {
     private EditText etInfo;
