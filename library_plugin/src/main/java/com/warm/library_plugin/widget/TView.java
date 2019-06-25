@@ -6,8 +6,6 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.warm.track.proxy.OnClickListenerProxy;
-
 public class TView extends View {
     public TView(Context context) {
         super(context);
@@ -21,8 +19,5 @@ public class TView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
+
 }

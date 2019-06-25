@@ -19,7 +19,7 @@ import com.warm.demo.R;
 import com.warm.demo.base.BaseFragment;
 import com.warm.demo.databinding.FragmentMainBinding;
 import com.warm.demo.detail.DetailActivity;
-import com.warm.track.annotation.Event;
+import com.warm.library_aspectj.annotation.Event;
 
 public class HomeFragment extends BaseFragment {
     private FragmentMainBinding mBinding;

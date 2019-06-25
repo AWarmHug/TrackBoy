@@ -14,14 +14,41 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+//    buildTypes(new Action<NamedDomainObjectContainer<com.android.build.gradle.internal.dsl.BuildType>>() {
+//        @Override
+//        void execute(NamedDomainObjectContainer<com.android.build.gradle.internal.dsl.BuildType> buildTypes) {
+//            buildTypes.each {
+//                switch (it.name) {
+//                    case "debug":
+//                        it.setMinifyEnabled(false)
+//                        it.proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'), "proguard-rules.pro")
+//                        break
+//                    case "release":
+//                        it.debuggable false
+//                        it.minifyEnabled true
+//                        it.zipAlignEnabled false
+//                        it.shrinkResources false
+//                        it.proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), "proguard-rules.pro"
+//
+//                }
+//            }
+//
+//
+//        }
+//    })
+
     buildTypes {
-        debug{
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         release {
-            minifyEnabled false
+            debuggable true
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,6 +58,7 @@ android {
     }
 
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

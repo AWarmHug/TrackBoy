@@ -65,20 +65,25 @@ public class Track {
 
 
     private static void appendName(StringBuilder sb, View view) {
-        if (view.getId() != View.NO_ID) {
-            sb.append("$");
-            sb.append(view.getClass().getSimpleName())
-                    .append(":")
-                    .append(view.getResources().getResourceEntryName(view.getId()));
+        if (view.getTag(R.id.key_fragment_name) != null) {
+            sb.append("$")
+                    .append(view.getTag(R.id.key_fragment_name));
         } else {
-            ViewGroup viewGroup = (ViewGroup) view.getParent();
-            sb.append("$");
-            sb.append(view.getClass().getSimpleName())
-                    .append(":");
-            if (viewGroup instanceof RecyclerView) {
-                sb.append(((RecyclerView) viewGroup).getChildAdapterPosition(view));
+            if (view.getId() != View.NO_ID) {
+                sb.append("$");
+                sb.append(view.getClass().getSimpleName())
+                        .append(":")
+                        .append(view.getResources().getResourceEntryName(view.getId()));
             } else {
-                sb.append(viewGroup.indexOfChild(view));
+                ViewGroup viewGroup = (ViewGroup) view.getParent();
+                sb.append("$");
+                sb.append(view.getClass().getSimpleName())
+                        .append(":");
+                if (viewGroup instanceof RecyclerView) {
+                    sb.append(((RecyclerView) viewGroup).getChildAdapterPosition(view));
+                } else {
+                    sb.append(viewGroup.indexOfChild(view));
+                }
             }
 
         }

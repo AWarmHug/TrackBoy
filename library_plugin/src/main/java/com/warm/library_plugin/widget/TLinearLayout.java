@@ -9,8 +9,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.warm.track.proxy.OnClickListenerProxy;
-
 public class TLinearLayout extends LinearLayout {
     public TLinearLayout(Context context) {
         super(context);
@@ -30,8 +28,5 @@ public class TLinearLayout extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
+
 }

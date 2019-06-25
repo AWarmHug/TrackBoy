@@ -3,13 +3,9 @@ package com.warm.library_plugin.widget;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-
-import com.warm.track.proxy.OnClickListenerProxy;
 
 public abstract class TViewGroup extends ViewGroup {
     public TViewGroup(Context context) {
@@ -29,14 +25,4 @@ public abstract class TViewGroup extends ViewGroup {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
-
-    @Override
-    public void onViewAdded(View child) {
-        super.onViewAdded(child);
-
-    }
 }

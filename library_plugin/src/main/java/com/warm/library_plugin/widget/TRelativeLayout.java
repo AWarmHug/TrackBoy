@@ -8,8 +8,6 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.warm.track.proxy.OnClickListenerProxy;
-
 public class TRelativeLayout extends RelativeLayout {
     public TRelativeLayout(Context context) {
         super(context);
@@ -28,8 +26,5 @@ public class TRelativeLayout extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
+
 }

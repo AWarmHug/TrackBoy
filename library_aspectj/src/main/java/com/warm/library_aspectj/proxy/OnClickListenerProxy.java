@@ -1,9 +1,8 @@
-package com.warm.track.proxy;
+package com.warm.library_aspectj.proxy;
 
 import android.util.Log;
 import android.view.View;
 
-import com.warm.track.BuildConfig;
 import com.warm.track.Data;
 import com.warm.track.Trace;
 import com.warm.track.utils.Utils;
@@ -29,16 +28,16 @@ public class OnClickListenerProxy extends BaseProxy implements View.OnClickListe
         StringBuilder sb = new StringBuilder();
 
         sb.append(getViewName(view))
-                .append("$")
-                .append(getClassName(l.getClass()))
+//                .append("$")
+//                .append(getClassName(l.getClass()))
                 .append("$")
                 .append(getClassName(view.getContext().getClass()));
 
         String md5 = Utils.toMD5(sb.toString());
 
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
             Log.d(TAG, "getName: " + sb.toString() + ",MD5: " + md5);
-        }
+//        }
 
         return md5;
     }

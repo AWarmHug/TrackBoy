@@ -1,18 +1,18 @@
 package com.warm.demo.detail;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.os.Bundle;
-
 import com.warm.demo.R;
+import com.warm.demo.base.BaseActivity;
 import com.warm.demo.databinding.ActivityDetailBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends BaseActivity {
     private ActivityDetailBinding mBinding;
 
     private DetailListAdapter mAdapter;

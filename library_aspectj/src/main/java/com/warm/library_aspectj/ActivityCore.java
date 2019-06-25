@@ -15,12 +15,16 @@ import org.aspectj.lang.annotation.Pointcut;
 public class ActivityCore extends BaseCore {
 
 
-    @Pointcut("execution(void android.app.Activity.onCreate(android.os.Bundle))")
+    @Pointcut("execution(void com.warm.demo.base.BaseActivity.onCreate(android.os.Bundle))&&within(com.warm.demo.base.BaseActivity)")
     public void onCreate() {
 
     }
+    @Pointcut("execution(void com.warm.demo.*.*Activity.onDestroy())&&within(com.warm.demo.base.BaseActivity)")
+    public void onDestroy(){
 
-    @After("onCreate()")
+    }
+
+    @After("onCreate()||onDestroy()")
     public void injectonCreate(JoinPoint joinPoint) {
         Trace trace = Data.getEvent(getName(joinPoint));
         if (trace != null) {

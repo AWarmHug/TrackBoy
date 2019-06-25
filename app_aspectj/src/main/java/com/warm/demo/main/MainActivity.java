@@ -19,4 +19,5 @@ public class MainActivity extends BaseActivity {
         mBinding.pager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.POSITION_NONE));
         mBinding.tab.setupWithViewPager(mBinding.pager);
     }
+
 }

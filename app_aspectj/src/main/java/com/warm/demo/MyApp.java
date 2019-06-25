@@ -9,10 +9,12 @@ import com.warm.track.Data;
 import com.warm.track.Track;
 
 public class MyApp extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();
-        Track.init(new DefaultTracker());
+
+        Track.init(new DefaultTracker(this));
 
         Data.putEvent("AppCompatButton:kktitle$LinearLayout:-1$MainActivity$MainActivity", "00001", "点击标题");
 
@@ -23,6 +25,7 @@ public class MyApp extends Application {
         Data.putEvent("e5cfec6bddcbc26958c45e124c371226","00003","申请信息：");
 
     }
+
 
     public void goDetail(View v) {
         Intent intent = new Intent(this, DetailActivity.class);

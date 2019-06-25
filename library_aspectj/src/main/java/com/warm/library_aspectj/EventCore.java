@@ -2,7 +2,7 @@ package com.warm.library_aspectj;
 
 import android.util.Log;
 
-import com.warm.track.annotation.Event;
+import com.warm.library_aspectj.annotation.Event;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -16,12 +16,12 @@ import java.lang.reflect.Method;
 @Aspect
 public class EventCore extends BaseCore{
 
-    @Pointcut("execution(@com.warm.track.annotation.Event * *(..))")
+    @Pointcut("execution(@Event * *(..))")
     public void method() {
 
     }
 
-    @Pointcut("execution(@com.warm.track.annotation.Event *.new(..))")
+    @Pointcut("execution(@Event *.new(..))")
     public void constructor() {
 
     }

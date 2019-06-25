@@ -13,12 +13,12 @@ import java.util.concurrent.TimeUnit;
 @Aspect
 public class LogCore {
 
-    @Pointcut("execution(@com.warm.track.annotation.Log * *(..))")
+    @Pointcut("execution(@Log * *(..))")
     public void method() {
 
     }
 
-    @Pointcut("execution(@com.warm.track.annotation.Log *.new(..))")
+    @Pointcut("execution(@Log *.new(..))")
     public void constructor() {
 
     }

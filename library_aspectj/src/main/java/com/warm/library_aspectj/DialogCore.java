@@ -13,13 +13,12 @@ import com.warm.track.utils.Utils;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-@Aspect
+//@Aspect
 public class DialogCore extends BaseCore {
 
-    @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
+    @Pointcut("execution(@Event * *(..))")
     public void method() {
 
     }

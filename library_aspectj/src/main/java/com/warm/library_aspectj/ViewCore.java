@@ -2,7 +2,7 @@ package com.warm.library_aspectj;
 
 import android.view.View;
 
-import com.warm.track.proxy.OnClickListenerProxy;
+import com.warm.library_aspectj.proxy.OnClickListenerProxy;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -26,7 +26,7 @@ public class ViewCore extends BaseCore {
 //    /**
 //     * 这是自定义注解的切点，如果在方法上加入了{@link Event},就认定是一个切点
 //     */
-//    @Pointcut("execution(@com.warm.track.annotation.Event * *(..))")
+//    @Pointcut("execution(@Event * *(..))")
 //    public void method() {
 //
 //    }

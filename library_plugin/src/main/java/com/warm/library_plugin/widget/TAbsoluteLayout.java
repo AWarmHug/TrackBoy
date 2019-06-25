@@ -6,8 +6,6 @@ import android.widget.AbsoluteLayout;
 
 import androidx.annotation.Nullable;
 
-import com.warm.track.proxy.OnClickListenerProxy;
-
 @Deprecated
 public class TAbsoluteLayout extends AbsoluteLayout {
     public TAbsoluteLayout(Context context) {
@@ -23,8 +21,4 @@ public class TAbsoluteLayout extends AbsoluteLayout {
     }
 
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
 }

@@ -1,1 +1,1 @@
-include ':app_aspectj', ':library_aspectj'/*, ':app_plugin', ':buildsrc'*/, ':track'/*, ':library_plugin'*/
+include ':app_aspectj', ':library_aspectj', ':track'/*, ':app_plugin', ':buildsrc', ':library_plugin'*/

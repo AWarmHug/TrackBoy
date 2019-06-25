@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
 
-import androidx.annotation.Nullable;
-
 import com.warm.track.proxy.OnClickListenerProxy;
 
 public class TCheckBox extends CheckBox {
@@ -21,8 +19,4 @@ public class TCheckBox extends CheckBox {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
 }

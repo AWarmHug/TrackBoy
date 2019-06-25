@@ -4,10 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
-import androidx.annotation.Nullable;
-
-import com.warm.track.proxy.OnClickListenerProxy;
-
 public class TSeekBar extends SeekBar {
     public TSeekBar(Context context) {
         super(context);
@@ -21,8 +17,5 @@ public class TSeekBar extends SeekBar {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
+
 }

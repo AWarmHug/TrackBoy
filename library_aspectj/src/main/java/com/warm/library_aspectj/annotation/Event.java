@@ -1,4 +1,4 @@
-package com.warm.track.annotation;
+package com.warm.library_aspectj.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,6 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
-@Retention(RetentionPolicy.CLASS)
-public @interface Log {
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Event {
+    String eventId() default "";
+
+    String value() default "";
+
 }

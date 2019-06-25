@@ -4,10 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
-import com.warm.track.proxy.OnClickListenerProxy;
-
 public class TTextView extends TextView {
     public TTextView(Context context) {
         super(context);
@@ -21,8 +17,4 @@ public class TTextView extends TextView {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
 }

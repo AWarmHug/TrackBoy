@@ -4,10 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.AutoCompleteTextView;
 
-import androidx.annotation.Nullable;
-
-import com.warm.track.proxy.OnClickListenerProxy;
-
 public class TAutoCompleteTextView extends AutoCompleteTextView {
     public TAutoCompleteTextView(Context context) {
         super(context);
@@ -22,7 +18,9 @@ public class TAutoCompleteTextView extends AutoCompleteTextView {
     }
 
     @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
+    public boolean performContextClick() {
+        return super.performContextClick();
     }
+
+
 }

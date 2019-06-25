@@ -17,7 +17,7 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class CompoundButtonCore extends BaseCore {
 
-    @Pointcut("execution(@com.warm.track.annotation.Event * *(..))")
+    @Pointcut("execution(@Event * *(..))")
     public void method() {
 
     }

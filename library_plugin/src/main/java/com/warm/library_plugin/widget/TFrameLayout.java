@@ -8,8 +8,6 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.warm.track.proxy.OnClickListenerProxy;
-
 public class TFrameLayout extends FrameLayout {
     public TFrameLayout(Context context) {
         super(context);
@@ -28,8 +26,5 @@ public class TFrameLayout extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(new OnClickListenerProxy(l));
-    }
+
 }
