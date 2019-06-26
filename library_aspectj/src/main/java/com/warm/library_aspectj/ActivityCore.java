@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
+import java.io.Serializable;
+
 @Aspect
 public class ActivityCore extends BaseCore {
 
@@ -19,13 +21,14 @@ public class ActivityCore extends BaseCore {
     public void onCreate() {
 
     }
+
     @Pointcut("execution(void com.warm.demo.*.*Activity.onDestroy())&&within(com.warm.demo.base.BaseActivity)")
-    public void onDestroy(){
+    public void onDestroy() {
 
     }
 
     @After("onCreate()||onDestroy()")
-    public void injectonCreate(JoinPoint joinPoint) {
+    public void injectOnCreate(JoinPoint joinPoint) {
         Trace trace = Data.getEvent(getName(joinPoint));
         if (trace != null) {
             track(trace.getId(), trace.getValue());
@@ -41,9 +44,7 @@ public class ActivityCore extends BaseCore {
 
         String md5 = Utils.toMD5(sb.toString());
 
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "getName: " + sb.toString() + ",MD5: " + md5);
-        }
+        Log.d(TAG, "getName: " + sb.toString() + ",MD5: " + md5);
 
         return md5;
     }
