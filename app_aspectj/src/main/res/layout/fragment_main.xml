@@ -23,7 +23,7 @@
                 android:text="标题" />
 
             <Button
-                android:id="@+id/kktitle"
+                android:id="@+id/bt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

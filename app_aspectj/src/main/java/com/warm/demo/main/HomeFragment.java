@@ -48,8 +48,13 @@ public class HomeFragment extends BaseFragment {
                 })
                 .create();
 
-        Log.d("Trace", "onCreate: " + mBinding.kktitle.toString());
-        mBinding.kktitle.setOnClickListener(v -> Toast.makeText(getContext(), "标题", Toast.LENGTH_SHORT).show());
+        mBinding.tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "标题", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mBinding.bt.setOnClickListener(v -> Toast.makeText(getContext(), "按钮", Toast.LENGTH_SHORT).show());
 //        mBinding.kktitle.setOnLongClickListener(v -> {
 //            Log.d(TAG, "onCreate: sss");
 //        });

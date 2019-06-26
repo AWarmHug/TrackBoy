@@ -29,6 +29,8 @@ import com.warm.demo.base.BaseFragment;
 import com.warm.demo.databinding.FragmentMainBinding;
 import com.warm.demo.databinding.FragmentMineBinding;
 
+import java.util.Date;
+
 public class MineFragment extends BaseFragment {
     private FragmentMineBinding mBinding;
     @Nullable
