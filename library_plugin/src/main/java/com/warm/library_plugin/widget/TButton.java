@@ -2,7 +2,14 @@ package com.warm.library_plugin.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+
+import com.warm.track.Data;
+import com.warm.track.Trace;
+import com.warm.track.Track;
+import com.warm.track.utils.Utils;
 
 public class TButton extends Button {
     public TButton(Context context) {
@@ -18,19 +25,38 @@ public class TButton extends Button {
     }
 
 
-
-    @Override
-    public boolean performLongClick() {
-        return super.performLongClick();
-    }
-
     @Override
     public boolean performClick() {
-        return super.performClick();
+
+        boolean click = super.performClick();
+
+        if (click) {
+            Trace trace = Data.getEvent(getName(this));
+            if (trace != null) {
+                Track.getTracker().track(trace.getId(), trace.getValue());
+            }
+        }
+        return click;
+
     }
 
-    @Override
-    public void sendAccessibilityEvent(int eventType) {
-        super.sendAccessibilityEvent(eventType);
+
+    private String getName(View view) {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(Track.getViewName(view))
+//                .append("$")
+//                .append(getClassName(l.getClass()))
+                .append("$")
+                .append(Track.getClassName(view.getContext().getClass()));
+
+        String md5 = Utils.toMD5(sb.toString());
+
+//        if (BuildConfig.DEBUG) {
+        Log.d("Track", "getName: " + sb.toString() + ",MD5: " + md5);
+//        }
+
+        return md5;
     }
 }
