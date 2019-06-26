@@ -5,16 +5,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.warm.demo.BuildConfig;
 import com.warm.track.Data;
 import com.warm.track.Trace;
 import com.warm.track.utils.Utils;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-@Aspect
+//@Aspect
 public class CompoundButtonCore extends BaseCore {
 
     @Pointcut("execution(@Event * *(..))")

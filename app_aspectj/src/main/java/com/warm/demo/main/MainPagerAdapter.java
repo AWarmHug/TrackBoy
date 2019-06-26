@@ -19,6 +19,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         mFragments.add(new HomeFragment());
         mFragments.add(new MallFragment());
         mFragments.add(new MineFragment());
+        mFragments.add(new MineFragment());
+        mFragments.add(new MineFragment());
+        mFragments.add(new MineFragment());
+        mFragments.add(new MineFragment());
+
     }
 
     @NonNull

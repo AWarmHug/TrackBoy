@@ -24,6 +24,11 @@ public class MyApp extends Application {
 
         Data.putEvent("e5cfec6bddcbc26958c45e124c371226","00003","申请信息：");
 
+
+        Data.putEvent("6b4ea1b0816ceb9ecfc646dcd724dc09","cbd_433","看我");
+        Data.putEvent("ddfbc6841607928a9adb84a969724335","cbd_433","看我");
+
+
     }
 
 

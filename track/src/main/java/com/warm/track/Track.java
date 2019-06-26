@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 public class Track {
 
@@ -68,6 +69,12 @@ public class Track {
         if (view.getTag(R.id.key_fragment_name) != null) {
             sb.append("$")
                     .append(view.getTag(R.id.key_fragment_name));
+            ViewGroup viewGroup = (ViewGroup) view.getParent();
+
+            if (viewGroup instanceof ViewPager){
+                sb.append(":");
+                sb.append(((ViewPager)viewGroup).getCurrentItem());
+            }
         } else {
             if (view.getId() != View.NO_ID) {
                 sb.append("$");

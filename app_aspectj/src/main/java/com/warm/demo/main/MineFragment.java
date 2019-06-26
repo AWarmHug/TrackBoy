@@ -1,35 +1,22 @@
 package com.warm.demo.main;
 
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.material.color.MaterialColors;
-import com.google.android.material.shape.EdgeTreatment;
 import com.google.android.material.shape.MaterialShapeDrawable;
-import com.google.android.material.shape.MaterialShapeUtils;
-import com.google.android.material.shape.RoundedCornerTreatment;
-import com.google.android.material.shape.ShapeAppearanceModel;
-import com.google.android.material.shape.ShapePath;
-import com.google.android.material.shape.ShapePathModel;
-import com.google.android.material.shape.TriangleEdgeTreatment;
 import com.warm.demo.R;
 import com.warm.demo.base.BaseFragment;
-import com.warm.demo.databinding.FragmentMainBinding;
 import com.warm.demo.databinding.FragmentMineBinding;
-
-import java.util.Date;
 
 public class MineFragment extends BaseFragment {
     private FragmentMineBinding mBinding;
@@ -49,7 +36,13 @@ public class MineFragment extends BaseFragment {
 //        materialShapeDrawable.setShadowColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
         materialShapeDrawable.setElevation(20);
 
-        ViewCompat.setBackground(mBinding.bt,materialShapeDrawable);
+        ViewCompat.setBackground(mBinding.tv1,materialShapeDrawable);
+        mBinding.tv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), mBinding.tv1.getText(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Nullable

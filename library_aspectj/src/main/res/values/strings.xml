@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Library</string>
-
-    <item name="trace_key" type="id"/>
-
-</resources>

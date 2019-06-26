@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
 
-import com.warm.track.proxy.OnClickListenerProxy;
-
 public class TCheckBox extends CheckBox {
     public TCheckBox(Context context) {
         super(context);

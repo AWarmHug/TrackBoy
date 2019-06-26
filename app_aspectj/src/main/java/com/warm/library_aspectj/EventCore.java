@@ -16,12 +16,12 @@ import java.lang.reflect.Method;
 @Aspect
 public class EventCore extends BaseCore{
 
-    @Pointcut("execution(@Event * *(..))")
+    @Pointcut("execution(@com.warm.library_aspectj.annotation.Event * *(..))")
     public void method() {
 
     }
 
-    @Pointcut("execution(@Event *.new(..))")
+    @Pointcut("execution(@com.warm.library_aspectj.annotation.Event *.new(..))")
     public void constructor() {
 
     }

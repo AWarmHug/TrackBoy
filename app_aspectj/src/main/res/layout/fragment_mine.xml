@@ -12,9 +12,9 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv1"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
             android:gravity="center"
             android:text="看我" />
 

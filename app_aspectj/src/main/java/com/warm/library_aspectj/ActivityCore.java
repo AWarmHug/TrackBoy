@@ -11,8 +11,6 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-import java.io.Serializable;
-
 @Aspect
 public class ActivityCore extends BaseCore {
 

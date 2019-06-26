@@ -8,13 +8,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.warm.demo.R;
 import com.warm.demo.base.BaseFragment;
 import com.warm.demo.databinding.FragmentMallBinding;
+import com.warm.demo.detail.DetailListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MallFragment extends BaseFragment {
     private FragmentMallBinding mBinding;
+    private DetailListAdapter mAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,6 +32,18 @@ public class MallFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        List<String> nameList=new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            nameList.add("张三"+i);
+        }
+        mAdapter=new DetailListAdapter(nameList);
+        mBinding.list.setAdapter(mAdapter);
+        mBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Nullable
