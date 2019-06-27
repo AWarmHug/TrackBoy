@@ -13,7 +13,7 @@ import java.util.zip.ZipOutputStream
 
 class Injector {
 
-    public static final String PACKAGE_WIDGET="com/warm/library_plugin/widget";
+    public static final String PACKAGE_WIDGET = "com/warm/library_plugin/widget";
 
     public static final String without = "com/warm/library_plugin"
 
@@ -88,6 +88,9 @@ class Injector {
             zos.putNextEntry(new ZipEntry(entryName))
 
             if (!jarEntry.isDirectory() && entryName.endsWith(".class") && !entryName.contains('R$') && !entryName.contains('R.class') && !entryName.contains('BuildConfig.class') && !entryName.contains(without)) {
+                println("class =${jarEntry}")
+
+
                 ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
                 String superClassName = Utils.getClassName(reader.superName)
 
