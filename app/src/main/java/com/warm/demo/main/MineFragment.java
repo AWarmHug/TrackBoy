@@ -1,6 +1,9 @@
 package com.warm.demo.main;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +33,16 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Drawable background = mBinding.tv1.getBackground();
+        if (background != null && !(background instanceof ColorDrawable)) {
+            return;
+        }
         MaterialShapeDrawable materialShapeDrawable = new MaterialShapeDrawable();
+        int backgroundColor =
+                background != null ? ((ColorDrawable) background).getColor() : Color.TRANSPARENT;
+        materialShapeDrawable.setFillColor(ColorStateList.valueOf(backgroundColor));
         materialShapeDrawable.initializeElevationOverlay(getContext());
-        materialShapeDrawable.setFillColor(ColorStateList.valueOf(ContextCompat.getColor(getContext(),R.color.colorPrimary)));
-//        materialShapeDrawable.setShadowColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
-        materialShapeDrawable.setElevation(20);
-
+        materialShapeDrawable.setElevation(30);
         ViewCompat.setBackground(mBinding.tv1,materialShapeDrawable);
         mBinding.tv1.setOnClickListener(new View.OnClickListener() {
             @Override

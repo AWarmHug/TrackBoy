@@ -28,6 +28,8 @@ public class DetailActivity extends BaseActivity {
         mAdapter=new DetailListAdapter(nameList);
         mBinding.list.setAdapter(mAdapter);
         mBinding.list.setLayoutManager(new LinearLayoutManager(this));
+        setSupportActionBar(mBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

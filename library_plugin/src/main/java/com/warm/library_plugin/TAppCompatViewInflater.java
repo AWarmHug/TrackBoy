@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatViewInflater;
 
+import com.google.android.material.theme.MaterialComponentsViewInflater;
 import com.warm.library_plugin.widget.TAbsoluteLayout;
 import com.warm.library_plugin.widget.TFrameLayout;
 import com.warm.library_plugin.widget.TLinearLayout;
@@ -14,7 +15,7 @@ import com.warm.library_plugin.widget.TRelativeLayout;
 import com.warm.library_plugin.widget.TScrollView;
 import com.warm.library_plugin.widget.TTableLayout;
 
-public class TAppCompatViewInflater extends AppCompatViewInflater {
+public class TAppCompatViewInflater extends MaterialComponentsViewInflater {
 
     @Nullable
     @Override
