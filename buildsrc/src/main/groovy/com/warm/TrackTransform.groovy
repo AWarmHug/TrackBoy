@@ -2,6 +2,7 @@ package com.warm
 
 import com.android.build.api.transform.*
 import com.google.common.collect.Sets
+import com.warm.ext.Config
 import javassist.ClassPool
 import javassist.CtClass
 import javassist.JarClassPath
@@ -43,6 +44,13 @@ class TrackTransform extends Transform {
     @Override
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
         super.transform(transformInvocation)
+        Config config=mProject.track.mConfig;
+
+        if (!config.enabled){
+            println "-----关闭track-plugin------"
+            return
+        }
+
         println "-----transform开始------"
         def inputs = transformInvocation.inputs
         def outputProvider = transformInvocation.outputProvider
