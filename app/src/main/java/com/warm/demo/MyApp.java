@@ -18,7 +18,7 @@ public class MyApp extends Application {
 
         Data.putEvent("AppCompatButton:kktitle$LinearLayout:-1$MainActivity$MainActivity", "00001", "点击标题");
 
-        Data.putEvent("9e6b11c0db8d57f4794faf0625913f87", "00002", "选中#未选中");
+        Data.putEvent("d2e6b1364c7fd935d1bb5e5788343247", "00002", "选中#未选中");
 
         Data.putEvent("c6fb01aa89e4a01cb4d40304f0c9e27a","00003","打开弹框");
 
