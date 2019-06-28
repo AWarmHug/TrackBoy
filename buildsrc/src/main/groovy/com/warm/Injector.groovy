@@ -2,6 +2,7 @@ package com.warm
 
 
 import com.google.common.io.Files
+import com.warm.ext.TrackConfig
 import javassist.ClassPool
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
@@ -15,12 +16,13 @@ class Injector {
 
     public static final String PACKAGE_WIDGET = "com/warm/library_plugin/widget";
 
-    public static final String without = "com/warm/library_plugin"
+    public static final String without = "com${File.separator}warm${File.separator}library_plugin"
+
 
     public static Map<String, String> clazz = new HashMap<>()
 
-    static injectDir(ClassPool pool, String absolutePath, String dest) {
 
+    static injectDir(ClassPool pool, String absolutePath, String dest, TrackConfig config) {
         println "------------------"
         println("absolutePath=${absolutePath}")
         println "dest=${dest}"
@@ -30,13 +32,17 @@ class Injector {
         if (dir.isDirectory()) {
             dir.eachFileRecurse { File file ->
                 String filePath = file.absolutePath
+
                 if (file.isFile()) {
                     File out = new File(dest + filePath.substring(absolutePath.length()))
                     Files.createParentDirs(out)
-                    if (filePath.endsWith(".class") && !filePath.contains('R$') && !filePath.contains('R.class') && !filePath.contains('BuildConfig.class') && !filePath.contains(without)) {
+                    if (filePath.endsWith(".class") && !filePath.contains('R$') && !filePath.contains('R.class') && !filePath.contains('BuildConfig.class') && config.filter(filePath)) {
+                        println "--------正在转换----------"
+                        println("Path=${filePath}")
+                        println "Dest=${dest}"
+
                         ClassReader reader = new ClassReader(new FileInputStream(filePath))
                         String superClassName = Utils.getClassName(reader.superName)
-
 
                         String value = clazz.get(superClassName)
 
@@ -62,7 +68,8 @@ class Injector {
 
     }
 
-    static injectJar(ClassPool pool, String absolutePath, String dest) {
+    static injectJar(ClassPool pool, String absolutePath, String dest, TrackConfig config) {
+
         println "------------------"
         println "absolutePath=${absolutePath}"
         println "dest=${dest}"
@@ -85,11 +92,14 @@ class Injector {
             }
             def entryName = jarEntry.name
 
+
             zos.putNextEntry(new ZipEntry(entryName))
 
-            if (!jarEntry.isDirectory() && entryName.endsWith(".class") && !entryName.contains('R$') && !entryName.contains('R.class') && !entryName.contains('BuildConfig.class') && !entryName.contains(without)) {
-                println("class =${jarEntry}")
+            if (!jarEntry.isDirectory() && entryName.endsWith(".class") && !entryName.contains('R$') && !entryName.contains('R.class') && !entryName.contains('BuildConfig.class') && config.filter(entryName)) {
 
+                println "--------正在转换----------"
+                println("Path=${entryName}")
+                println "Dest=${dest}"
 
                 ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
                 String superClassName = Utils.getClassName(reader.superName)

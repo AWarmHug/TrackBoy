@@ -7,6 +7,8 @@ repositories {
 
 
 dependencies {
+    testImplementation 'junit:junit:4.12'
+
     compile gradleApi() //gradle sdk
     compile localGroovy() //groovy sdk
     implementation 'com.android.tools.build:gradle:3.4.1'

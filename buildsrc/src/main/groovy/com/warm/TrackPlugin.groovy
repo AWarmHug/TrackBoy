@@ -1,6 +1,7 @@
 package com.warm
 
-import com.warm.ext.TrackExt
+import com.warm.ext.TrackConfig
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -9,14 +10,10 @@ class TrackPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        println "------TrackPlugin开始工作-----"
 //        TrackExtension trackExt = project.extensions.create("track", TrackExtension, project)
-        project.extensions.add("track", new TrackExt(project))
+        TrackConfig config = project.extensions.create("track", TrackConfig)
 
-
-
-        project.android.registerTransform(new TrackTransform(project))
-        println "------TrackPlugin结束工作-----"
+        project.android.registerTransform(new TrackTransform(project, config))
     }
 }
 

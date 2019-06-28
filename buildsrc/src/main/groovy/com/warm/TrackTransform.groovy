@@ -2,7 +2,7 @@ package com.warm
 
 import com.android.build.api.transform.*
 import com.google.common.collect.Sets
-import com.warm.ext.Config
+import com.warm.ext.TrackConfig
 import javassist.ClassPool
 import javassist.CtClass
 import javassist.JarClassPath
@@ -13,10 +13,12 @@ import org.objectweb.asm.ClassReader
 import java.util.jar.JarFile
 
 class TrackTransform extends Transform {
-    Project mProject
+    private TrackConfig config;
+    Project project
 
-    TrackTransform(Project project) {
-        mProject = project
+    TrackTransform(Project project, TrackConfig config) {
+        this.project = project
+        this.config = config
     }
 
     @Override
@@ -44,21 +46,17 @@ class TrackTransform extends Transform {
     @Override
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
         super.transform(transformInvocation)
-        Config config=mProject.track.mConfig;
+        config.excludes.add(Injector.without)
+        println config
 
-        if (!config.enabled){
-            println "-----关闭track-plugin------"
-            return
-        }
-
-        println "-----transform开始------"
+        println "Track-Plugin-----transform开始------"
         def inputs = transformInvocation.inputs
         def outputProvider = transformInvocation.outputProvider
 
         outputProvider.deleteAll()
 
         ClassPool pool = ClassPool.getDefault()
-        pool.appendClassPath(mProject.android.bootClasspath[0].toString())
+        pool.appendClassPath(project.android.bootClasspath[0].toString())
 
         Map<String, String> dirMap = new HashMap<>();
         Map<String, String> jarMap = new HashMap<>();
@@ -70,7 +68,9 @@ class TrackTransform extends Transform {
                 // 获取output目录
                 File dest = outputProvider.getContentLocation(it.name,
                         it.getContentTypes(), it.getScopes(),
-                        Format.DIRECTORY);
+                        Format.DIRECTORY)
+
+
                 dirMap.put(it.file.absolutePath, dest.absolutePath)
 
             }
@@ -94,16 +94,15 @@ class TrackTransform extends Transform {
 
         }
 
+        println Injector.PACKAGE_WIDGET
+        println Injector.without
+
         dirMap.each {
             if (it.key.contains(Injector.PACKAGE_WIDGET)) {
                 File file = new File(it.key)
                 ClassReader reader = new ClassReader(new FileInputStream(file))
                 CtClass ctClass = pool.get(Utils.getClassName(reader.className));
                 Injector.clazz.put(ctClass.superclass.name, ctClass.name)
-//                if (ctClass.superclass.name.contains("AppCompat")) {
-//                    Injector.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
-//                }
-
             }
         }
 
@@ -111,7 +110,6 @@ class TrackTransform extends Transform {
         jarMap.each {
 
             def inJarFile = new JarFile(it.key)
-
 
             def enumeration = inJarFile.entries();
 
@@ -125,9 +123,6 @@ class TrackTransform extends Transform {
                     ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
                     CtClass ctClass = pool.get(Utils.getClassName(reader.className));
                     Injector.clazz.put(ctClass.superclass.name, ctClass.name)
-//                    if (ctClass.superclass.name.contains("AppCompat")) {
-//                        Injector.clazz.put(ctClass.superclass.superclass.name, ctClass.name)
-//                    }
 
                 }
             }
@@ -138,21 +133,21 @@ class TrackTransform extends Transform {
         println Injector.clazz.size()
 
 
-        println("-----处理Dir开始-----")
+        println("Track-Plugin-----处理Dir开始-----")
         dirMap.each {
-            Injector.injectDir(pool, it.key, it.value)
+            Injector.injectDir(pool, it.key, it.value,config)
         }
-        println("-----处理Dir结束-----")
+        println("Track-Plugin-----处理Dir结束-----")
 
 
-        println("-----处理Jar开始-----")
+        println("Track-Plugin-----处理Jar开始-----")
         jarMap.each {
-            Injector.injectJar(pool, it.key, it.value)
+            Injector.injectJar(pool, it.key, it.value,config)
         }
-        println("-----处理Jar结束-----")
+        println("Track-Plugin-----处理Jar结束-----")
 
 
-        println "-----transform结束------"
+        println "Track-Plugin-----transform结束------"
 
     }
 
