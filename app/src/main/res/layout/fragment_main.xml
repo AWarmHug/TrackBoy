@@ -16,24 +16,19 @@
             tools:context=".main.MainActivity">
 
             <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:gravity="center"
-                android:text="标题" />
+                android:text="文字" />
 
             <Button
                 android:id="@+id/bt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="点击" />
+                android:text="按钮" />
 
-            <Button
-                android:id="@+id/tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="快点我" />
 
             <Button
                 android:id="@+id/tvDialog"
@@ -80,12 +75,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="进入详情页" />
-
-            <Button
-                android:id="@+id/btThis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="lambda_this" />
 
             <com.warm.demo.widget.ApplyLayout
                 android:id="@+id/applyLayout"

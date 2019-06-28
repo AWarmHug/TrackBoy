@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.warm.demo.detail.DetailActivity;
-import com.warm.track.Data;
+import com.warm.demo.data.Data;
 import com.warm.track.Track;
 
 public class MyApp extends Application {
@@ -14,9 +14,9 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Track.init(new DefaultTracker(this));
+        Track.init(new DefaultTracker(this),new DefaultD());
 
-        Data.putEvent("AppCompatButton:kktitle$LinearLayout:-1$MainActivity$MainActivity", "00001", "点击标题");
+        Data.putEvent("c2a56b89e1ddcd454cc29dd729ac065d", "00001", "按钮");
 
         Data.putEvent("d2e6b1364c7fd935d1bb5e5788343247", "00002", "选中#未选中");
 

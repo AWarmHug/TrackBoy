@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.AutoCompleteTextView;
 
+import com.warm.library_plugin.helper.ViewActionHelper;
+
 public class TAutoCompleteTextView extends AutoCompleteTextView {
     public TAutoCompleteTextView(Context context) {
         super(context);
@@ -18,9 +20,10 @@ public class TAutoCompleteTextView extends AutoCompleteTextView {
     }
 
     @Override
-    public boolean performContextClick() {
-        return super.performContextClick();
+    public boolean performClick() {
+        boolean click = super.performClick();
+        ViewActionHelper.performClick(this);
+        return click;
     }
-
 
 }

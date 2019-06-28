@@ -18,7 +18,7 @@ import com.warm.demo.detail.DetailListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MallFragment extends BaseFragment {
+public class RecyclerViewFragment extends BaseFragment {
     private FragmentMallBinding mBinding;
     private DetailListAdapter mAdapter;
 
@@ -32,6 +32,12 @@ public class MallFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         List<String> nameList=new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             nameList.add("张三"+i);

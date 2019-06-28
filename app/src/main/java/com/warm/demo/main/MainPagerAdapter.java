@@ -16,13 +16,13 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     public MainPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
-        mFragments.add(new HomeFragment());
-        mFragments.add(new MallFragment());
-        mFragments.add(new MineFragment());
-        mFragments.add(new MineFragment());
-        mFragments.add(new MineFragment());
-        mFragments.add(new MineFragment());
-        mFragments.add(new MineFragment());
+        mFragments.add(new XMLViewFragment());
+        mFragments.add(new AddViewFragment());
+        mFragments.add(new RecyclerViewFragment());
+        mFragments.add(new CustomFragment());
+        mFragments.add(new CustomFragment());
+        mFragments.add(new CustomFragment());
+        mFragments.add(new CustomFragment());
 
     }
 

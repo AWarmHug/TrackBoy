@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RatingBar;
 
+import com.warm.library_plugin.helper.ViewActionHelper;
+
 public class TRatingBar extends RatingBar {
     public TRatingBar(Context context) {
         super(context);
@@ -17,5 +19,11 @@ public class TRatingBar extends RatingBar {
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    public boolean performClick() {
+        boolean click = super.performClick();
+        ViewActionHelper.performClick(this);
+        return click;
+    }
 
 }

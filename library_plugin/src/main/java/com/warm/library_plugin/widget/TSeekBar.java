@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
+import com.warm.library_plugin.helper.ViewActionHelper;
+
 public class TSeekBar extends SeekBar {
     public TSeekBar(Context context) {
         super(context);
@@ -15,6 +17,13 @@ public class TSeekBar extends SeekBar {
 
     public TSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    public boolean performClick() {
+        boolean click = super.performClick();
+        ViewActionHelper.performClick(this);
+        return click;
     }
 
 

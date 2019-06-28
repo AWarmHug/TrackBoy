@@ -22,28 +22,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-//    buildTypes(new Action<NamedDomainObjectContainer<com.android.build.gradle.internal.dsl.BuildType>>() {
-//        @Override
-//        void execute(NamedDomainObjectContainer<com.android.build.gradle.internal.dsl.BuildType> buildTypes) {
-//            buildTypes.each {
-//                switch (it.name) {
-//                    case "debug":
-//                        it.setMinifyEnabled(false)
-//                        it.proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'), "proguard-rules.pro")
-//                        break
-//                    case "release":
-//                        it.debuggable false
-//                        it.minifyEnabled true
-//                        it.zipAlignEnabled false
-//                        it.shrinkResources false
-//                        it.proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), "proguard-rules.pro"
-//
-//                }
-//            }
-//
-//
-//        }
-//    })
 
     buildTypes {
         debug {

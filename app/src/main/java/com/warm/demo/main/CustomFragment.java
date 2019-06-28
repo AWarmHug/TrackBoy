@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
 
@@ -21,7 +20,7 @@ import com.warm.demo.R;
 import com.warm.demo.base.BaseFragment;
 import com.warm.demo.databinding.FragmentMineBinding;
 
-public class MineFragment extends BaseFragment {
+public class CustomFragment extends BaseFragment {
     private FragmentMineBinding mBinding;
     @Nullable
     @Override

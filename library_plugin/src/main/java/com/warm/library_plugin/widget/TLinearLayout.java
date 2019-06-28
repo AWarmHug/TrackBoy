@@ -10,7 +10,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.warm.library_plugin.TrackingAccessibilityDelegate;
+import com.warm.library_plugin.helper.AccessibilityDelegateHelper;
+import com.warm.library_plugin.helper.ViewActionHelper;
 
 public class TLinearLayout extends LinearLayout {
     public TLinearLayout(Context context) {
@@ -32,11 +33,16 @@ public class TLinearLayout extends LinearLayout {
     }
 
     @Override
+    public boolean performClick() {
+        boolean click = super.performClick();
+        ViewActionHelper.performClick(this);
+        return click;
+    }
+
+
+    @Override
     public void onViewAdded(View child) {
         super.onViewAdded(child);
-        if (child.getClass().getSimpleName().equals("Button")){
-            child.setAccessibilityDelegate(new TrackingAccessibilityDelegate());
-        }
-
+        AccessibilityDelegateHelper.onViewAdded(child);
     }
 }

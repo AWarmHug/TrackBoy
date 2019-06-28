@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,44 +19,23 @@ import com.warm.demo.databinding.FragmentMainBinding;
 import com.warm.demo.detail.DetailActivity;
 import com.warm.track.annotation.Event;
 
-public class HomeFragment extends BaseFragment {
+public class XMLViewFragment extends BaseFragment {
     private FragmentMainBinding mBinding;
 
-    private AlertDialog dialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mBinding = DataBindingUtil.bind(view);
 
-        dialog = new AlertDialog.Builder(getContext())
-                .setTitle("标题")
-                .setMessage("这是内容")
-                .setPositiveButton("是的", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "灌灌灌灌", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .create();
-
-        mBinding.tvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "标题", Toast.LENGTH_SHORT).show();
-            }
-        });
         mBinding.bt.setOnClickListener(v -> Toast.makeText(getContext(), "按钮", Toast.LENGTH_SHORT).show());
-//        mBinding.kktitle.setOnLongClickListener(v -> {
-//            Log.d(TAG, "onCreate: sss");
-//        });
-        //        TrackView.bind(mBinding.tv, "eventId", "点击", "弹屏");
+
         mBinding.tv.setOnClickListener(new View.OnClickListener() {
 
             @Event(eventId = "eventId", value = "点了")
@@ -66,12 +44,20 @@ public class HomeFragment extends BaseFragment {
                 Toast.makeText(getContext(), "弹一下", Toast.LENGTH_SHORT).show();
             }
         });
-        mBinding.tvDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
+        mBinding.tvDialog.setOnClickListener(v -> new AlertDialog.Builder(getContext())
+                .setTitle("温馨提示")
+                .setMessage("确定删除该好友吗?")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show());
 
         mBinding.cbAddress.setOnCheckedChangeListener((buttonView, isChecked) -> Toast.makeText(getContext(), isChecked ? "选中" : "未选中", Toast.LENGTH_SHORT).show());
 
@@ -85,7 +71,6 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "hhhh", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -94,25 +79,18 @@ public class HomeFragment extends BaseFragment {
             Intent intent = new Intent(getContext(), DetailActivity.class);
             startActivity(intent);
         });
-        mBinding.btThis.setOnClickListener(this::onBtThisClick);
-        Button bt = new Button(getContext());
-        bt.setText("痛痛痛");
-        bt.setOnClickListener(v -> Toast.makeText(getContext(), "痛痛痛", Toast.LENGTH_SHORT).show());
-        mBinding.line.addView(bt);
 
         mBinding.applyLayout.setOnAppleClickListener(view1 -> {
-            Toast.makeText(getContext(), "hhhh", Toast.LENGTH_SHORT).show();
+        });
+        mBinding.applyLayout.setOnClickListener(v -> {
         });
 
     }
 
-    public void onBtThisClick(View view) {
-        Toast.makeText(getContext(), "onBtThisClick", Toast.LENGTH_SHORT).show();
-    }
 
     @Nullable
     @Override
     public CharSequence getTitle() {
-        return "主页";
+        return "XMLView";
     }
 }

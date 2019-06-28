@@ -2,7 +2,11 @@ package com.warm.library_plugin.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Spinner;
+
+import com.warm.library_plugin.helper.AccessibilityDelegateHelper;
+import com.warm.library_plugin.helper.ViewActionHelper;
 
 public class TSpinner extends Spinner {
     public TSpinner(Context context) {
@@ -17,5 +21,16 @@ public class TSpinner extends Spinner {
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    public boolean performClick() {
+        boolean click = super.performClick();
+        ViewActionHelper.performClick(this);
+        return click;
+    }
 
+    @Override
+    public void onViewAdded(View child) {
+        super.onViewAdded(child);
+        AccessibilityDelegateHelper.onViewAdded(child);
+    }
 }
