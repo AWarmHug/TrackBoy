@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public class TEditText extends EditText {
     public TEditText(Context context) {
@@ -23,7 +23,7 @@ public class TEditText extends EditText {
     @Override
     public boolean performClick() {
         boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
+        Track.getTrack().getViewAction().performClick(this);
         return click;
     }
 

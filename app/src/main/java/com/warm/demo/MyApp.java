@@ -4,9 +4,13 @@ import android.app.Application;
 import android.content.Intent;
 import android.view.View;
 
-import com.warm.demo.detail.DetailActivity;
 import com.warm.demo.data.Data;
+import com.warm.demo.detail.DetailActivity;
+import com.warm.demo.track.DefaultTracker;
+import com.warm.demo.track.DefaultViewFinder;
+import com.warm.demo.track.Trace;
 import com.warm.track.Track;
+import com.warm.track.ViewAction;
 
 public class MyApp extends Application {
 
@@ -14,11 +18,13 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Track.init(new DefaultTracker(this),new DefaultD());
+        ViewAction<Trace> viewAction= new ViewAction<>(new DefaultTracker(this), new DefaultViewFinder());
+
+        Track.init(viewAction);
 
         Data.putEvent("c2a56b89e1ddcd454cc29dd729ac065d", "00001", "按钮");
 
-        Data.putEvent("d2e6b1364c7fd935d1bb5e5788343247", "00002", "选中#未选中");
+        Data.putEvent("fce08ae6d559915746f72c32937efcb3", "00002", "选中#未选中");
 
         Data.putEvent("c6fb01aa89e4a01cb4d40304f0c9e27a","00003","打开弹框");
 

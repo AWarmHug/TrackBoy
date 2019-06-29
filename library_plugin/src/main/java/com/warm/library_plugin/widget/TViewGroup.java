@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.RequiresApi;
 
 import com.warm.library_plugin.helper.AccessibilityDelegateHelper;
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public abstract class TViewGroup extends ViewGroup {
     public TViewGroup(Context context) {
@@ -33,7 +33,7 @@ public abstract class TViewGroup extends ViewGroup {
     @Override
     public boolean performClick() {
         boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
+        Track.getTrack().getViewAction().performClick(this);
         return click;
     }
 

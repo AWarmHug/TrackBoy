@@ -2,6 +2,8 @@ package com.warm.demo.data;
 
 import androidx.collection.LruCache;
 
+import com.warm.demo.track.Trace;
+
 public class Data {
 
     private static LruCache<String, Trace> sLruCache = new LruCache<>(200);

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
 
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public class TImageButton extends ImageButton {
     public TImageButton(Context context) {
@@ -22,7 +22,7 @@ public class TImageButton extends ImageButton {
     @Override
     public boolean performClick() {
         boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
+        Track.getTrack().getViewAction().performClick(this);
         return click;
     }
 

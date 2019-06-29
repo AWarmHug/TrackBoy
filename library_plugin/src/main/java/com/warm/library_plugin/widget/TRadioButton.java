@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
 
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public class TRadioButton extends RadioButton {
     public TRadioButton(Context context) {
@@ -19,19 +19,14 @@ public class TRadioButton extends RadioButton {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public boolean performClick() {
-        boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
-        return click;
-    }
+
 
     @Override
     public void setChecked(boolean checked) {
         boolean c = isChecked() != checked;
         super.setChecked(checked);
         if (c) {
-            ViewActionHelper.setChecked(this, checked);
+            Track.getTrack().getViewAction().setChecked(this, checked);
         }
     }
 

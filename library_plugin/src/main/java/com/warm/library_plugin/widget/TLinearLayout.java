@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.warm.library_plugin.helper.AccessibilityDelegateHelper;
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public class TLinearLayout extends LinearLayout {
     public TLinearLayout(Context context) {
@@ -35,7 +35,7 @@ public class TLinearLayout extends LinearLayout {
     @Override
     public boolean performClick() {
         boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
+        Track.getTrack().getViewAction().performClick(this);
         return click;
     }
 

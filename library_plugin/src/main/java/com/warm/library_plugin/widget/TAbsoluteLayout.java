@@ -8,7 +8,7 @@ import android.widget.AbsoluteLayout;
 import androidx.annotation.Nullable;
 
 import com.warm.library_plugin.helper.AccessibilityDelegateHelper;
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 @Deprecated
 public class TAbsoluteLayout extends AbsoluteLayout {
@@ -27,7 +27,7 @@ public class TAbsoluteLayout extends AbsoluteLayout {
     @Override
     public boolean performClick() {
         boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
+        Track.getTrack().getViewAction().performClick(this);
         return click;
     }
 

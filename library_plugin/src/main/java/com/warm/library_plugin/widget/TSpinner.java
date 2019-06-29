@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Spinner;
 
 import com.warm.library_plugin.helper.AccessibilityDelegateHelper;
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public class TSpinner extends Spinner {
     public TSpinner(Context context) {
@@ -24,7 +24,7 @@ public class TSpinner extends Spinner {
     @Override
     public boolean performClick() {
         boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
+        Track.getTrack().getViewAction().performClick(this);
         return click;
     }
 

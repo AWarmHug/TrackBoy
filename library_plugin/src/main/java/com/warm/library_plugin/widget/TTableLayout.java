@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TableLayout;
 
 import com.warm.library_plugin.helper.AccessibilityDelegateHelper;
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public class TTableLayout extends TableLayout {
 
@@ -23,7 +23,7 @@ public class TTableLayout extends TableLayout {
     @Override
     public boolean performClick() {
         boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
+        Track.getTrack().getViewAction().performClick(this);
         return click;
     }
 

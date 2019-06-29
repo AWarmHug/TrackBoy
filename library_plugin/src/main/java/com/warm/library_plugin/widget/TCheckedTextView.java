@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckedTextView;
 
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public class TCheckedTextView extends CheckedTextView {
     public TCheckedTextView(Context context) {
@@ -24,14 +24,8 @@ public class TCheckedTextView extends CheckedTextView {
         boolean c = isChecked() != checked;
         super.setChecked(checked);
         if (c) {
-            ViewActionHelper.setChecked(this, checked);
+            Track.getTrack().getViewAction().setChecked(this, checked);
         }
     }
 
-    @Override
-    public boolean performClick() {
-        boolean click = super.performClick();
-        ViewActionHelper.performClick(this);
-        return click;
-    }
 }

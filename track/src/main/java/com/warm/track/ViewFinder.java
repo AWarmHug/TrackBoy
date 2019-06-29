@@ -18,8 +18,15 @@ import com.warm.track.utils.Utils;
  * 时间：2019-06-28 22:44
  * 描述：
  */
-public class ViewFinder {
+public abstract class ViewFinder<T> {
 
+
+    protected abstract T find(String name);
+
+
+    public T find(View view) {
+        return find(ViewFinder.getName(view));
+    }
 
     public static String getName(View view) {
 

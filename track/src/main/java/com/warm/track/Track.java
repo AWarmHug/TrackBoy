@@ -1,26 +1,22 @@
 package com.warm.track;
 
-public class Track {
+public class Track<T> {
+    private static Track mTrack;
 
-    private static D mD;
+    private ViewAction<T> mViewAction;
 
-    private static Tracker mTracker;
+    public static <T> void init(ViewAction<T> viewAction) {
+        mTrack = new Track();
+        mTrack.mViewAction = viewAction;
 
-    public static void init(Tracker tracker, D d) {
-        mTracker = tracker;
-        mD = d;
     }
 
-    public static Tracker getTracker() {
-        if (mTracker == null) {
-            throw new RuntimeException("请先init");
-        }
-        return mTracker;
-    }
-
-    public static D getD() {
-        return mD;
+    public static Track getTrack() {
+        return mTrack;
     }
 
 
+    public ViewAction<T> getViewAction() {
+        return mViewAction;
+    }
 }

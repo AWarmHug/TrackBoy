@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.CompoundButton;
 
-import com.warm.library_plugin.helper.ViewActionHelper;
+import com.warm.track.Track;
 
 public class TrackingAccessibilityDelegate extends View.AccessibilityDelegate {
 
@@ -14,9 +14,9 @@ public class TrackingAccessibilityDelegate extends View.AccessibilityDelegate {
         switch (eventType) {
             case AccessibilityEvent.TYPE_VIEW_CLICKED:
                 if (host instanceof CompoundButton) {
-                    ViewActionHelper.setChecked(host, ((CompoundButton) host).isChecked());
+                    Track.getTrack().getViewAction().setChecked(host, ((CompoundButton) host).isChecked());
                 } else {
-                    ViewActionHelper.performClick(host);
+                    Track.getTrack().getViewAction().performClick(host);
                 }
                 break;
         }
