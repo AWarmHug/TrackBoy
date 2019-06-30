@@ -20,9 +20,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         mFragments.add(new AddViewFragment());
         mFragments.add(new RecyclerViewFragment());
         mFragments.add(new CustomFragment());
-        mFragments.add(new CustomFragment());
-        mFragments.add(new CustomFragment());
-        mFragments.add(new CustomFragment());
 
     }
 

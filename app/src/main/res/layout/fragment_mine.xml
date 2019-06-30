@@ -12,12 +12,26 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv1"
-            android:layout_width="120dp"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="@color/colorPrimary"
             android:gravity="center"
-            android:background="@color/colorAccent"
-            android:text="看我" />
+            android:textColor="@android:color/white"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:text="自定义控件" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:enabled="true"
+            android:layout_marginTop="4dp"
+            android:textColor="@android:color/white"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:text="自定义控件" />
 
 
     </LinearLayout>
