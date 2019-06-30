@@ -39,7 +39,7 @@ public abstract class TCompoundButton extends CompoundButton {
         boolean c = isChecked() != checked;
         super.setChecked(checked);
         if (c) {
-            Track.getTrack().getViewAction().setChecked(this, checked);
+            Track.getTrack().getViewTracker().setChecked(this, checked);
         }
     }
 

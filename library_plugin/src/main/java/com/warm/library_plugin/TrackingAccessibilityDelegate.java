@@ -14,9 +14,9 @@ public class TrackingAccessibilityDelegate extends View.AccessibilityDelegate {
         switch (eventType) {
             case AccessibilityEvent.TYPE_VIEW_CLICKED:
                 if (host instanceof CompoundButton) {
-                    Track.getTrack().getViewAction().setChecked(host, ((CompoundButton) host).isChecked());
+                    Track.getTrack().getViewTracker().setChecked(host, ((CompoundButton) host).isChecked());
                 } else {
-                    Track.getTrack().getViewAction().performClick(host);
+                    Track.getTrack().getViewTracker().performClick(host);
                 }
                 break;
         }

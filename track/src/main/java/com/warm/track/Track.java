@@ -3,11 +3,11 @@ package com.warm.track;
 public class Track<T> {
     private static Track mTrack;
 
-    private ViewAction<T> mViewAction;
+    private ViewTracker<T> mViewTracker;
 
-    public static <T> void init(ViewAction<T> viewAction) {
+    public static <T> void init(ViewTracker<T> viewTracker) {
         mTrack = new Track();
-        mTrack.mViewAction = viewAction;
+        mTrack.mViewTracker = viewTracker;
 
     }
 
@@ -16,7 +16,7 @@ public class Track<T> {
     }
 
 
-    public ViewAction<T> getViewAction() {
-        return mViewAction;
+    public ViewTracker<T> getViewTracker() {
+        return mViewTracker;
     }
 }

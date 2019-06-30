@@ -25,10 +25,10 @@ public abstract class ViewFinder<T> {
 
 
     public T find(View view) {
-        return find(ViewFinder.getName(view));
+        return find(getName(view));
     }
 
-    public static String getName(View view) {
+    protected String getName(View view) {
 
         StringBuilder sb = new StringBuilder();
 
@@ -46,7 +46,7 @@ public abstract class ViewFinder<T> {
     }
 
 
-    public static String getActivityName(View view) {
+    private String getActivityName(View view) {
         Activity activity = getActivity(view);
         if (activity != null) {
             return activity.getClass().getSimpleName();
@@ -56,7 +56,7 @@ public abstract class ViewFinder<T> {
     }
 
     @Nullable
-    public static Activity getActivity(View view) {
+    protected Activity getActivity(View view) {
         Context context = view.getContext();
         while (context instanceof ContextWrapper) {
             if (context instanceof Activity) {
@@ -67,16 +67,8 @@ public abstract class ViewFinder<T> {
         return null;
     }
 
-    public static String getClassName(Class<?> clazz) {
 
-        if (clazz.getEnclosingClass() != null) {
-            return getClassName(clazz.getEnclosingClass());
-        } else {
-            return clazz.getSimpleName();
-        }
-    }
-
-    public static String getViewName(View view) {
+    protected String getViewName(View view) {
         StringBuilder sb = new StringBuilder();
         appendName(sb, view);
         if (view.getParent() instanceof ViewGroup) {
@@ -94,7 +86,7 @@ public abstract class ViewFinder<T> {
     }
 
 
-    private static void appendName(StringBuilder sb, View view) {
+    protected void appendName(StringBuilder sb, View view) {
         if (view.getTag(R.id.key_fragment_name) != null) {
             sb.append("$")
                     .append(view.getTag(R.id.key_fragment_name));

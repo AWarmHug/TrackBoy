@@ -22,7 +22,7 @@ public class TTextView extends TextView {
     @Override
     public boolean performClick() {
         boolean click = super.performClick();
-        Track.getTrack().getViewAction().performClick(this);
+        Track.getTrack().getViewTracker().performClick(this);
         return click;
     }
 }
