@@ -13,24 +13,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailActivity extends BaseActivity {
+    public static final String KEY_TYPE = "TYPE";
+
+    public static final int TYPE_TICKET = 1;
+    public static final int TYPE_FOOD = 2;
+
     private ActivityDetailBinding mBinding;
 
     private DetailListAdapter mAdapter;
 
+    private int mType;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding= DataBindingUtil.setContentView(this,R.layout.activity_detail);
-        List<String> nameList=new ArrayList<>();
+        mType = getIntent().getIntExtra(KEY_TYPE, TYPE_TICKET);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        List<String> nameList = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
-            nameList.add("张三"+i);
+            nameList.add("张三" + i);
         }
-        mAdapter=new DetailListAdapter(nameList);
+        mAdapter = new DetailListAdapter(nameList);
         mBinding.list.setAdapter(mAdapter);
         mBinding.list.setLayoutManager(new LinearLayoutManager(this));
         setSupportActionBar(mBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
+        switch (mType) {
+            case TYPE_TICKET:
+                setTitle("门票详情");
+                break;
+            case TYPE_FOOD:
+                setTitle("食物详情");
+                return;
+        }
 
     }
 

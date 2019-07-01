@@ -38,9 +38,7 @@ public abstract class ViewFinder<T> {
 
         String md5 = Utils.toMD5(sb.toString());
 
-//        if (BuildConfig.DEBUG) {
-        Log.d("Track", "getName: " + sb.toString() + ",MD5: " + md5);
-//        }
+        Log.d("Track", "getExtra: " + sb.toString() + ",MD5: " + md5);
 
         return md5;
     }

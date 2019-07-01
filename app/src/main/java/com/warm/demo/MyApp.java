@@ -1,13 +1,10 @@
 package com.warm.demo;
 
 import android.app.Application;
-import android.content.Intent;
-import android.view.View;
 
 import com.warm.demo.data.Data;
-import com.warm.demo.detail.DetailActivity;
-import com.warm.demo.track.DefaultViewTracker;
 import com.warm.demo.track.DefaultViewFinder;
+import com.warm.demo.track.DefaultViewTracker;
 import com.warm.demo.track.Trace;
 import com.warm.track.Track;
 import com.warm.track.ViewTracker;
@@ -37,9 +34,4 @@ public class MyApp extends Application {
 
     }
 
-
-    public void goDetail(View v) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        startActivity(intent);
-    }
 }

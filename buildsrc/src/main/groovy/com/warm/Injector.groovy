@@ -1,9 +1,11 @@
 package com.warm
 
-
+import android.app.Fragment
 import com.google.common.io.Files
 import com.warm.ext.TrackConfig
 import javassist.ClassPool
+import javassist.CtMethod
+import javassist.CtNewMethod
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
@@ -56,7 +58,30 @@ class Injector {
 //                            IOUtils.write(itemViewCtClass.toBytecode(),new FileOutputStream(dest + filePath.substring(absolutePath.length())))
                             itemViewCtClass.detach()
                         } else {
+//                            if (superClassName == "androidx.fragment.app.Fragment") {
+//                                def itemViewCtClass = pool.get(Utils.getClassName(reader.className))
+//                                if (itemViewCtClass.isFrozen()) {
+//                                    itemViewCtClass.defrost()
+//                                }
+//                                CtMethod ctMethod = itemViewCtClass.getDeclaredMethod("onViewCreated", pool.get(["android.view.View", "android.os.Bundle"] as String[]))
+//                                if (ctMethod == null) {
+//                                    String code = '''
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//    }
+//'''
+//                                    ctMethod = CtNewMethod.make(code, itemViewCtClass)
+//                                    itemViewCtClass.addMethod(ctMethod)
+//                                }
+//                                String name = reader.className
+//                                ctMethod.insertAfter("\$1.setTag(com.warm.track.R.id.key_fragment_name,${name}")
+//                                itemViewCtClass.writeFile(dest)
+//                                itemViewCtClass.detach()
+//
+//                            } else {
                             FileUtils.copyFile(file, out)
+//                            }
                         }
                     } else {
                         FileUtils.copyFile(file, out)

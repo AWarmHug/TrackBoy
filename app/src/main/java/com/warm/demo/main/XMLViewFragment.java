@@ -77,6 +77,7 @@ public class XMLViewFragment extends BaseFragment {
 
         mBinding.btGoDetail.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), DetailActivity.class);
+            intent.putExtra(DetailActivity.KEY_TYPE,DetailActivity.TYPE_TICKET);
             startActivity(intent);
         });
 

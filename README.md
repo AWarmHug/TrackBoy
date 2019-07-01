@@ -21,11 +21,9 @@ public static void onEvent(Context context, String eventID, String label);
 
 1. 代码耦合问题：
 
-   * 写一个代理类，再通过反射替换事件。
-
+   * 通过设置View.AccessibilityDelegate或者直接反射替换点击事件。
    * 通过AOP的方式，针对需要埋点的切面，插入代码。
-
-     通过反射，需要额外损耗，且有Android版本的限制。
+   * 将控件直接替换为我们自己的控件，在控件内部进行埋点
 
 2. 维护问题：
 
