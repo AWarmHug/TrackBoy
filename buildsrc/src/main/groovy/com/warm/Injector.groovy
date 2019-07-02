@@ -17,28 +17,25 @@ class Injector {
 
     public static final String without = "com${File.separator}warm${File.separator}library_plugin"
 
-
     public static Map<String, String> clazz = new HashMap<>()
 
-
-    static injectDir(ClassPool pool, String absolutePath, String dest, TrackConfig config) {
+    static injectDir(ClassPool pool, String src, String dest, TrackConfig config) {
         println "------------------"
-        println("absolutePath=${absolutePath}")
-        println "dest=${dest}"
+        println("src = ${src}")
+        println "dest = ${dest}"
 
-        File dir = new File(absolutePath);
+        File dir = new File(src);
 
         if (dir.isDirectory()) {
             dir.eachFileRecurse { File file ->
                 String filePath = file.absolutePath
 
                 if (file.isFile()) {
-                    File out = new File(dest + filePath.substring(absolutePath.length()))
+                    File out = new File(dest + filePath.substring(src.length()))
                     Files.createParentDirs(out)
                     if (filePath.endsWith(".class") && !filePath.contains('R$') && !filePath.contains('R.class') && !filePath.contains('BuildConfig.class') && config.filter(filePath)) {
                         println "--------正在转换----------"
-                        println("Path=${filePath}")
-                        println "Dest=${dest}"
+                        println("classPath = ${filePath}")
 
                         ClassReader reader = new ClassReader(new FileInputStream(filePath))
                         String superClassName = Utils.getClassName(reader.superName)
@@ -52,7 +49,7 @@ class Injector {
                             }
                             itemViewCtClass.superclass = pool.get(value);
                             itemViewCtClass.writeFile(dest)
-//                            IOUtils.write(itemViewCtClass.toBytecode(),new FileOutputStream(dest + filePath.substring(absolutePath.length())))
+//                            IOUtils.write(itemViewCtClass.toBytecode(),new FileOutputStream(dest + filePath.substring(src.length())))
                             itemViewCtClass.detach()
                         } else {
 //                            if (superClassName == "androidx.fragment.app.Fragment") {
@@ -78,20 +75,18 @@ class Injector {
 
     }
 
-    static injectJar(ClassPool pool, String absolutePath, String dest, TrackConfig config) {
+    static injectJar(ClassPool pool, String src, String dest, TrackConfig config) {
 
         println "------------------"
-        println "absolutePath=${absolutePath}"
-        println "dest=${dest}"
+        println "src = ${src}"
+        println "dest = ${dest}"
 
         Files.createParentDirs(new File(dest))
-//        ZipInputStream zis = new ZipInputStream(new FileInputStream(absolutePath))
+//        ZipInputStream zis = new ZipInputStream(new FileInputStream(src))
 
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(dest));
 
-
-        def inJarFile = new JarFile(absolutePath)
-
+        def inJarFile = new JarFile(src)
 
         def enumeration = inJarFile.entries();
 
@@ -102,14 +97,12 @@ class Injector {
             }
             def entryName = jarEntry.name
 
-
             zos.putNextEntry(new ZipEntry(entryName))
 
             if (!jarEntry.isDirectory() && entryName.endsWith(".class") && !entryName.contains('R$') && !entryName.contains('R.class') && !entryName.contains('BuildConfig.class') && config.filter(entryName)) {
 
                 println "--------正在转换----------"
-                println("Path=${entryName}")
-                println "Dest=${dest}"
+                println("classPath = ${entryName}")
 
                 ClassReader reader = new ClassReader(inJarFile.getInputStream(jarEntry))
                 String superClassName = Utils.getClassName(reader.superName)
@@ -136,7 +129,6 @@ class Injector {
         }
 //        zis.close()
         zos.close()
-
     }
 
 
