@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'android-aspectjx'
-apply plugin: com.warm.TrackPlugin
+apply plugin: 'android-aspectjx'
+//apply plugin: com.warm.TrackPlugin
 
-track {
-    excludes = [
-            "retrofit2"
-    ]
-}
+//track {
+//    excludes = [
+//            "retrofit2"
+//    ]
+//}
 
 android {
     dataBinding {
@@ -60,9 +60,9 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha05'
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
 
-//    implementation project(path: ':library_aspectj')
+    implementation project(path: ':library_aspectj')
 
-    implementation project(path: ':library_plugin')
+//    implementation project(path: ':library_plugin')
     implementation project(path: ':track')
 
 

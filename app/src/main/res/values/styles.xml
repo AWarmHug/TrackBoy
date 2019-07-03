@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="elevationOverlaysEnabled">true</item>
         <item name="colorOnSurface">#BBB7B9</item>
-        <item name="viewInflaterClass">com.warm.library_plugin.TAppCompatViewInflater</item>
     </style>
 
 </resources>

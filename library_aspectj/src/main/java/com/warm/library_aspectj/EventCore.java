@@ -14,7 +14,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 @Aspect
-public class EventCore extends BaseCore{
+public class EventCore {
 
     @Pointcut("execution(@com.warm.track.annotation.Event * *(..))")
     public void method() {
@@ -44,10 +44,10 @@ public class EventCore extends BaseCore{
         return null;
     }
 
-    protected void track(Event debugLog) {
-        if (debugLog != null) {
-            Log.d(TAG, "track: "+debugLog.value());
-            track(debugLog.eventId(), debugLog.value());
-        }
+    protected void track(Event event) {
+//        if (event != null) {
+//            Log.d(TAG, "track: "+event.value());
+//            track(event.eventId(), event.value());
+//        }
     }
 }

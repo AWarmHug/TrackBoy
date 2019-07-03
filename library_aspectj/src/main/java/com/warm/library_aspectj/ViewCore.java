@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
 @Aspect
-public class ViewCore extends BaseCore {
+public class ViewCore {
 
     @Pointcut("call(* android.view.View.setOnClickListener(android.view.View.OnClickListener))&&args(clickListener)")
     public void setOnClickListener(View.OnClickListener clickListener) {

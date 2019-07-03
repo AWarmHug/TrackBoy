@@ -1,9 +1,8 @@
 package com.warm.library_aspectj;
 
+import android.os.Trace;
 import android.util.Log;
 
-import com.warm.track.Data;
-import com.warm.track.Trace;
 import com.warm.track.utils.Utils;
 
 import org.aspectj.lang.JoinPoint;
@@ -17,7 +16,8 @@ import org.aspectj.lang.annotation.Pointcut;
  * 描述：
  */
 @Aspect
-public class FragmentCore extends BaseCore {
+public class FragmentCore {
+    private static final String TAG = "FragmentCore";
 
     /**
      * @Override public void onResume() {
@@ -56,37 +56,28 @@ public class FragmentCore extends BaseCore {
 
     @After("onResume()||onPause()")
     public void onLife(JoinPoint joinPoint) {
-        Trace trace = Data.getEvent(getName(joinPoint));
-        if (trace != null) {
-            track(trace.getId(), trace.getValue());
-        }
+
     }
 
     @After("setUserVisibleHint(isVisibleToUser)")
     public void injectSetUserVisibleHint(JoinPoint joinPoint, boolean isVisibleToUser) {
         Log.d(TAG, " isVisibleToUser=" + isVisibleToUser);
-        Trace trace = Data.getEvent(getName(joinPoint));
-        if (trace != null) {
-            track(trace.getId(), trace.getValue());
-        }
+
     }
 
     @After("onHiddenChanged(hidden)")
     public void injectOnHiddenChanged(JoinPoint joinPoint, boolean hidden) {
         Log.d(TAG, " hidden=" + hidden);
-        Trace trace = Data.getEvent(getName(joinPoint));
-        if (trace != null) {
-            track(trace.getId(), trace.getValue());
-        }
+
     }
 
 
     private String getName(JoinPoint joinPoint) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(joinPoint.toShortString())
-                .append("$")
-                .append(getClassName(joinPoint.getTarget().getClass()));
+//        sb.append(joinPoint.toShortString())
+//                .append("$")
+//                .append(getClassName(joinPoint.getTarget().getClass()));
 
         String md5 = Utils.toMD5(sb.toString());
 
