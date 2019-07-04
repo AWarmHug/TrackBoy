@@ -23,7 +23,7 @@ public class MyApp extends Application {
 
         Data.putEvent("79b9a7987b4b786a4123da40c9e1dff1", "00001", "按钮");
 
-        Data.putEvent("fce08ae6d559915746f72c32937efcb3", "00002", "选中#未选中");
+        Data.putEvent("1a96b5cdec72d9ccbcc360d72dd1646f", "00002", "选中#未选中");
 
         Data.putEvent("c6fb01aa89e4a01cb4d40304f0c9e27a", "00003", "打开弹框");
 
