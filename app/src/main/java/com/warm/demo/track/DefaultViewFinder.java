@@ -1,5 +1,8 @@
 package com.warm.demo.track;
 
+import android.util.Log;
+import android.view.View;
+
 import com.warm.demo.data.Data;
 import com.warm.track.ViewFinder;
 
@@ -8,9 +11,11 @@ import com.warm.track.ViewFinder;
  * 时间：2019-06-29 00:43
  * 描述：
  */
-public class DefaultViewFinder extends ViewFinder<Trace> {
+public class DefaultViewFinder extends ViewFinder<ViewTrace> {
+
     @Override
-    protected Trace find(String name) {
-        return Data.getEvent(name);
+    public ViewTrace find(View view) {
+        return new ViewTrace(view.getContext(), Data.getEvent(getName(view)));
     }
+
 }

@@ -21,12 +21,8 @@ import com.warm.track.utils.Utils;
 public abstract class ViewFinder<T> {
 
 
-    protected abstract T find(String name);
+    public abstract T find(View view);
 
-
-    public T find(View view) {
-        return find(getName(view));
-    }
 
     protected String getName(View view) {
 
