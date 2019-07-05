@@ -1,4 +1,4 @@
-无痕埋点实现方案的初步尝试
+##无痕埋点实现方案的初步尝试
 
 #### 需求和解决方案分析
 
@@ -33,11 +33,9 @@ public static void onEvent(Context context, String eventID, String label);
 
    这就比较简单了，在2的方案下，可以直接下发映射关系到APP中，可以加入版本的概念，毕竟埋点本身并不会经常修改。
 
-#### 具体实现
+####代码耦合问题的具体实现
 
-我们分析了需求，也初步找到了一些解决方案，下面就介绍一下具体的实现：
-
-1. #### View.AccessibilityDelegate
+1. ##### View.AccessibilityDelegate
 
    Android系统提供了View.AccessibilityDelegate来帮助视力，肢体残疾等用户来使用Android设备。
 
@@ -82,7 +80,7 @@ public static void onEvent(Context context, String eventID, String label);
 
    这个方案存在两个缺陷，1、无法给Dialog和PopupWindow埋点，2、需要多次遍历控件，影响 性能
 
-2. #### 反射
+2. ##### 反射
 
    我们查看View的源码可以发现，源码中有这样一个类```ListenerInfo ```，所有的事件都是存放在这个类中，我们可以写一个```View.OnClickListener```代理类，通过View.hasOnClickListeners()判断是否有点击事件，直接替换点击事件。具体代码如下：
 
@@ -116,7 +114,7 @@ public static void onEvent(Context context, String eventID, String label);
 
    参考代码来自[点我达的一篇博客](http://tech.dianwoda.com/2019/04/02/1-zen-yao-qu-quan-ju-hook-viewde-shi-jian/)，这种方式也存在很明显的缺点，第一仍然需要循环所有控件，第二，何时进行替换，存在这样的情况：点击事件是网络请求之后再设置，那么这时候可能就会无法替换到，第三，存在一些控件通过performClick()来触发点击事件，而非OnClickListener，比如TabLayout。
 
-3. #### 通过AOP的方式插入埋点代码，这里主要介绍Aspectj在Android中的使用
+3. ##### 通过AOP的方式插入埋点代码，这里主要介绍Aspectj在Android中的使用
 
    首先需要进行配置，原本想要使用AspectJ，需要[大量的配置](<https://fernandocejas.com/2014/08/03/aspect-oriented-programming-in-android/>)。当然也有简单的方法，这样可以直接使用沪江的[AspectJX](<https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx>)，具体的配置方法见项目介绍。
 
@@ -201,7 +199,7 @@ public static void onEvent(Context context, String eventID, String label);
    
    ```
 
-4. #### 通过Gradle插件，将控件的父类直接修改为我们自己的控件
+4. ##### 通过Gradle插件，将控件的父类直接修改为我们自己的控件
 
    该方案的思路来源于[美团的一篇博客](https://tech.meituan.com/2017/03/02/mt-mobile-analytics-practice.html)，我进行了实践和补充，这是我认为比较完善的方案。
 
@@ -302,3 +300,6 @@ public static void onEvent(Context context, String eventID, String label);
    }
    ```
 
+####唯一标识和映射关系的具体实现
+
+可以看[51信用卡这一篇文章](<https://juejin.im/post/5c6fab38f265da2dd05242ea>)，网络上关于这些基本都千篇一律，我也是如此。
