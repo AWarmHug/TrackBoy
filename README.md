@@ -203,7 +203,7 @@ public static void onEvent(Context context, String eventID, String label);
 
 4. #### 通过Gradle插件，将控件的父类直接修改为我们自己的控件
 
-   该方案的思路来源于[美团的一篇博客](https://tech.meituan.com/2017/03/02/mt-mobile-analytics-practice.html)，我进行了实践和补充。
+   该方案的思路来源于[美团的一篇博客](https://tech.meituan.com/2017/03/02/mt-mobile-analytics-practice.html)，我进行了实践和补充，这是我认为比较完善的方案。
 
    我们可以自定义一些常用控件，将所有的控件都直接继承自定义控件，在我们自己的控件中进行埋点操作，这样中，可以拦截到更多的事件，稳定且可靠，比如如下的TTextView：
 
@@ -278,4 +278,27 @@ public static void onEvent(Context context, String eventID, String label);
        }
    ```
 
+   通过该方法我们得知，可以再Theme中设置AppCompatViewInflater，我们可以自定义TAppCompatViewInflater，替换成我们自己的控件。但是第三方库中的控件，我们自定义的控件，就会失效，所以，我们需要写一个[插件](buildsrc)，在编译时，将会打印，转换后的jar包路径，![转换路径](imgs/dir_path.png)
    
+   将控件的父类修改成我们自定义的控件。我们可以查看修改后的代码，生成的路径为：**app/build/intermediates/transforms/TrackTransform/debug**，使用JD-GUI打开，我们可以看到：![转换后的代码](imgs/after_transform.png)
+   
+   我给插件写了一个extension，可以排除不需要转换的包：
+   
+   ```groovy
+   track {
+       excludes = [
+               "retrofit2","com/umeng/"
+       ]
+   }
+   ```
+   
+   通过这样的方式，可以将所有的控件转换成自定义的控件，但是仍然还有一些缺陷，比如我们很多时候需要在代码中动态添加控件，可以调用addView()的方法，传入需要加入的控件，我们可能会存在new LinearLayout()或new Button()这种情况，我们还是不能转换，但是我们可以结合第一种方案，在ViewGroup.addView时，设置View.AccessibilityDelegate，这样既不就覆盖了所有的情况
+   
+   ```java
+   @Override
+   public void onViewAdded(View child) {
+       super.onViewAdded(child);
+       AccessibilityDelegateHelper.onViewAdded(child);
+   }
+   ```
+

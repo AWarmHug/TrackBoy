@@ -4,7 +4,7 @@ apply plugin: com.warm.TrackPlugin
 
 track {
     excludes = [
-            "retrofit2"
+            "retrofit2","com/umeng/"
     ]
 }
 
