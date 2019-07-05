@@ -1,4 +1,4 @@
-##无痕埋点实现方案的初步尝试
+## 无痕埋点实现方案的初步尝试
 
 #### 需求和解决方案分析
 
@@ -33,7 +33,7 @@ public static void onEvent(Context context, String eventID, String label);
 
    这就比较简单了，在2的方案下，可以直接下发映射关系到APP中，可以加入版本的概念，毕竟埋点本身并不会经常修改。
 
-####代码耦合问题的具体实现
+#### 代码耦合问题的具体实现
 
 1. ##### View.AccessibilityDelegate
 
@@ -300,6 +300,6 @@ public static void onEvent(Context context, String eventID, String label);
    }
    ```
 
-####唯一标识和映射关系的具体实现
+#### 唯一标识和映射关系的具体实现
 
 可以看[51信用卡这一篇文章](<https://juejin.im/post/5c6fab38f265da2dd05242ea>)，网络上关于这些基本都千篇一律，我也是如此。
