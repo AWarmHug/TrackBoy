@@ -104,11 +104,32 @@ public abstract class ViewFinder<T> {
                 if (viewGroup instanceof RecyclerView) {
                     sb.append(((RecyclerView) viewGroup).getChildAdapterPosition(view));
                 } else {
-                    sb.append(viewGroup.indexOfChild(view));
+
+                    sb.append(getSameIndex(view, viewGroup));
                 }
             }
 
         }
+    }
+
+    /**
+     * 优化index，View相对于同层级的相同类型的view来说排在第几个；
+     * @param view
+     * @param viewGroup
+     * @return
+     */
+    private int getSameIndex(View view, ViewGroup viewGroup) {
+        int index = 0;
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View cView = viewGroup.getChildAt(i);
+            if (view.getClass().equals(cView.getClass())) {
+                if (view.equals(cView)) {
+                    return index;
+                }
+                index++;
+            }
+        }
+        return index;
     }
 
 }
