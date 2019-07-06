@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">track</string>
     <item name="key_fragment_name" type="id" />
+    <item name="key_child_need_index" type="id" />
 </resources>

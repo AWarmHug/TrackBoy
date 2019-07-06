@@ -22,19 +22,30 @@
                 android:gravity="center"
                 android:text="文字" />
 
-            <Button
-                android:id="@+id/bt"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="按钮" />
+                android:layout_height="wrap_content">
 
 
-            <Button
-                android:id="@+id/tvDialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="出现弹框" />
+                <Button
+                    android:id="@+id/bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="添加LinearLayout" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/tvDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="出现弹框" />
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/cbAddress"
@@ -60,21 +71,20 @@
                 android:background="@color/colorAccent" />
 
             <com.warm.demo.widget.ItemLayout
-                android:id="@+id/item1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <com.warm.demo.widget.ItemLayout
-                android:id="@+id/item2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <com.warm.flowlayout.FlowLayout
+                android:id="@+id/flAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btGoDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="进入详情页" />
+
+            </com.warm.flowlayout.FlowLayout>
 
             <com.warm.demo.widget.ApplyLayout
                 android:id="@+id/applyLayout"
@@ -82,6 +92,7 @@
                 android:layout_height="wrap_content">
 
             </com.warm.demo.widget.ApplyLayout>
+
         </LinearLayout>
     </ScrollView>
 

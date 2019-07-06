@@ -6,22 +6,34 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.warm.demo.R;
 import com.warm.demo.base.BaseFragment;
 import com.warm.demo.databinding.FragmentMainBinding;
 import com.warm.demo.detail.DetailActivity;
+import com.warm.track.Track;
 import com.warm.track.annotation.Event;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class XMLViewFragment extends BaseFragment {
     private FragmentMainBinding mBinding;
+    private List<Integer> actionTypes = new ArrayList<>();
 
+    {
+        actionTypes.add(DetailActivity.TYPE_TICKET);
+        actionTypes.add(DetailActivity.TYPE_BUS);
+    }
 
     @Nullable
     @Override
@@ -34,7 +46,11 @@ public class XMLViewFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mBinding.bt.setOnClickListener(v -> Toast.makeText(getContext(), "按钮", Toast.LENGTH_SHORT).show());
+        mBinding.bt.setOnClickListener(v -> {
+            LinearLayout linearLayout = new LinearLayout(getContext());
+            linearLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+            mBinding.line.addView(linearLayout, 2, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120));
+        });
 
         mBinding.tv.setOnClickListener(new View.OnClickListener() {
 
@@ -75,17 +91,27 @@ public class XMLViewFragment extends BaseFragment {
             }
         });
 
-        mBinding.btGoDetail.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), DetailActivity.class);
-            intent.putExtra(DetailActivity.KEY_TYPE,DetailActivity.TYPE_TICKET);
-            startActivity(intent);
-        });
+        for (Integer type : actionTypes) {
+            Button button = new Button(getContext());
+            if (type==DetailActivity.TYPE_TICKET){
+                button.setText("门票详情");
+            }else {
+                button.setText("车票详情");
+            }
+            button.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), DetailActivity.class);
+                intent.putExtra(DetailActivity.KEY_TYPE, type);
+                startActivity(intent);
+            });
+            mBinding.flAction.addView(button);
+        }
+
+        Track.setChildNeedIndex(mBinding.flAction);
 
         mBinding.applyLayout.setOnAppleClickListener(view1 -> {
         });
         mBinding.applyLayout.setOnClickListener(v -> {
         });
-
     }
 
 
