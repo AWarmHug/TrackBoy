@@ -42,7 +42,7 @@ public static void onEvent(Context context, String eventID, String label);
    可以查看**View.performClick()**源码：
 
    ```java
-   		public boolean performClick() {
+       public boolean performClick() {
            final boolean result;
            final ListenerInfo li = mListenerInfo;
            if (li != null && li.mOnClickListener != null) {
@@ -64,14 +64,13 @@ public static void onEvent(Context context, String eventID, String label);
    在点击之后，会调用 sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED)；
 
    ```java
-   		public void sendAccessibilityEvent(int eventType) {
+       public void sendAccessibilityEvent(int eventType) {
            if (mAccessibilityDelegate != null) {
                mAccessibilityDelegate.sendAccessibilityEvent(this, eventType);
            } else {
                sendAccessibilityEventInternal(eventType);
            }
        }
-   
    ```
 
    最后会调用AccessibilityDelegate.sendAccessibilityEvent(View host, int eventType)方法。我们自定义AccessibilityDelegate，在相关的方法中埋点。
@@ -305,7 +304,7 @@ public static void onEvent(Context context, String eventID, String label);
 
 2. 还有一些埋点上传方案是将所有的控件点击事件都上传后台，由后台来捞有效的埋点，这种方案加入index还是有必要的，毕竟后台可以控制哪些需要index，哪些不需要，APP只管上传点位信息就行，也就是**全埋点**的方案，这样的方案缺点主要是浪费流量，针对性不强。
 
-不论什么样的方案，无痕埋点都需要多维护点位，每次页面发生修改，可能都需要后台维护一下埋点，这样的工作可以分配给产品、测试、运营他们。
+不论什么样的方案，无痕埋点都需要多维护点位，每次页面发生修改，可能都需要后台维护一下埋点，这样的工作可以分配给产品、测试、运营他们，。
 
 #### 最后
 
