@@ -27,7 +27,7 @@ public static void onEvent(Context context, String eventID, String label);
 
 2. 维护问题：
 
-   我们针对需要埋点的控件，生成一个唯一标识，如：**Activity+层层布局ClassName+id**。通过id与和埋点内容建立一套映射关系，当需要触发埋点时，根据标识获取到内容，进行埋点。
+   我们针对需要埋点的控件，生成一个唯一标识，如：**Activity+层层布局ClassName+id**/index。通过id与和埋点内容建立一套映射关系，当需要触发埋点时，根据标识获取到内容，进行埋点。
 
 3. 动态修改：
 
@@ -42,7 +42,7 @@ public static void onEvent(Context context, String eventID, String label);
    可以查看**View.performClick()**源码：
 
    ```java
-   	public boolean performClick() {
+   		public boolean performClick() {
            final boolean result;
            final ListenerInfo li = mListenerInfo;
            if (li != null && li.mOnClickListener != null) {
@@ -64,7 +64,7 @@ public static void onEvent(Context context, String eventID, String label);
    在点击之后，会调用 sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED)；
 
    ```java
-   public void sendAccessibilityEvent(int eventType) {
+   		public void sendAccessibilityEvent(int eventType) {
            if (mAccessibilityDelegate != null) {
                mAccessibilityDelegate.sendAccessibilityEvent(this, eventType);
            } else {
@@ -85,31 +85,31 @@ public static void onEvent(Context context, String eventID, String label);
    我们查看View的源码可以发现，源码中有这样一个类```ListenerInfo ```，所有的事件都是存放在这个类中，我们可以写一个```View.OnClickListener```代理类，通过View.hasOnClickListeners()判断是否有点击事件，直接替换点击事件。具体代码如下：
 
    ```
-   // hook一个View的监听器，替换成上面的代理监听器
-   public void hookListener(View view) {  
-       // 1. 反射调用View的getListenerInfo方法（API>=14），获得mListenerInfo对象
-       Class viewClazz = Class.forName("android.view.View");
-       Method getListenerInfoMethod = viewClazz.getDeclaredMethod("getListenerInfo");
-       if (!getListenerInfoMethod.isAccessible()) {
-           getListenerInfoMethod.setAccessible(true);
+       // hook一个View的监听器，替换成上面的代理监听器
+       public void hookListener(View view) {  
+           // 1. 反射调用View的getListenerInfo方法（API>=14），获得mListenerInfo对象
+           Class viewClazz = Class.forName("android.view.View");
+           Method getListenerInfoMethod = viewClazz.getDeclaredMethod("getListenerInfo");
+           if (!getListenerInfoMethod.isAccessible()) {
+               getListenerInfoMethod.setAccessible(true);
+           }
+           Object mListenerInfo = listenerInfoMethod.invoke(view);
+   
+           // 2. 然后从mListenerInfo中反射获取mOnClickListener对象
+           Class listenerInfoClazz = Class.forName("android.view.View$ListenerInfo");
+           Field onClickListenerField = listenerInfoClazz.getDeclaredField("mOnClickListener");
+           if (!onClickListenerField.isAccessible()) {
+               onClickListenerField.setAccessible(true);
+           }
+           View.OnClickListener mOnClickListener = (View.OnClickListener) onClickListenerField.get(mListenerInfo);
+   
+           // 3. 创建代理的点击监听器对象
+           View.OnClickListener mOnClickListenerProxy = new OnClickListenerProxy(mOnClickListener);
+   
+           // 4. 把mListenerInfo的mOnClickListener设成新的onClickListenerProxy
+           onClickListenerField.set(mListenerInfo, mOnClickListenerProxy);
+           // 用这个似乎也可以：view.setOnClickListener(mOnClickListenerProxy);     
        }
-       Object mListenerInfo = listenerInfoMethod.invoke(view);
-   
-       // 2. 然后从mListenerInfo中反射获取mOnClickListener对象
-       Class listenerInfoClazz = Class.forName("android.view.View$ListenerInfo");
-       Field onClickListenerField = listenerInfoClazz.getDeclaredField("mOnClickListener");
-       if (!onClickListenerField.isAccessible()) {
-           onClickListenerField.setAccessible(true);
-       }
-       View.OnClickListener mOnClickListener = (View.OnClickListener) onClickListenerField.get(mListenerInfo);
-   
-       // 3. 创建代理的点击监听器对象
-       View.OnClickListener mOnClickListenerProxy = new OnClickListenerProxy(mOnClickListener);
-   
-       // 4. 把mListenerInfo的mOnClickListener设成新的onClickListenerProxy
-       onClickListenerField.set(mListenerInfo, mOnClickListenerProxy);
-       // 用这个似乎也可以：view.setOnClickListener(mOnClickListenerProxy);     
-   }
    ```
 
    参考代码来自[点我达的一篇博客](http://tech.dianwoda.com/2019/04/02/1-zen-yao-qu-quan-ju-hook-viewde-shi-jian/)，这种方式也存在很明显的缺点，第一仍然需要循环所有控件，第二，何时进行替换，存在这样的情况：点击事件是网络请求之后再设置，那么这时候可能就会无法替换到，第三，存在一些控件通过performClick()来触发点击事件，而非OnClickListener，比如TabLayout。
@@ -123,70 +123,68 @@ public static void onEvent(Context context, String eventID, String label);
    Aspectj有很多高深的写法，主要还是靠自己多写多尝试。这里我写了一个点击事件的埋点
 
    ```
-   @Aspect
-   public class ViewCore extends BaseCore {
+       @Aspect
+       public class ViewCore extends BaseCore {
    
-       /**
-        * 这是自定义注解的切点，如果在方法上加入了{@link Event},就认定是一个切点
-        */
-       @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
-       public void method() {
+           /**
+            * 这是自定义注解的切点，如果在方法上加入了{@link Event},就认定是一个切点
+            */
+           @Pointcut("execution(@com.warm.someaop.annotation.Event * *(..))")
+           public void method() {
    
-       }
-   
-       /**
-        * {@link android.view.View.OnClickListener#onClick(View)}的切点
-     * 第二段为lambda的写法，
-        * @param view
-        */
-       @Pointcut(value = "(execution(* android.view.View.OnClickListener.onClick(android.view.View))&&args(view))||(execution(void *..lambda*(android.view.View))&&args(view))")
-       public void onClick(View view) {
-   
-       }
-   
-       /**
-        * 具体的通知方法，当Pointcut中的方法被调用之后，触发该方法对一些信息进行拦截
-        * @param joinPoint
-        * @param view
-        * @param obj
-        * @throws Throwable
-        */
-       @After("onClick(view)&&!method()&&this(obj)")
-       public void injectOnClick(JoinPoint joinPoint, View view,Object obj) throws Throwable {
-           Trace trace = Data.getEvent(getName(joinPoint, view));
-           if (trace != null) {
-               track(trace.getId(), trace.getValue());
-           }
-       }
-   
-   
-       private String getName(JoinPoint joinPoint, View view) {
-   
-           StringBuilder sb = new StringBuilder();
-   
-           sb.append(getViewName(view))
-                   .append("$")
-                   .append(getClassName(joinPoint.getTarget().getClass()))
-                   .append("$")
-                   .append(getClassName(view.getContext().getClass()));
-   
-           String md5 = Utils.toMD5(sb.toString());
-   
-           if (BuildConfig.DEBUG) {
-               Log.d(TAG, "getName: " + sb.toString() + ",MD5: " + md5);
            }
    
-           return md5;
+           /**
+            * {@link android.view.View.OnClickListener#onClick(View)}的切点
+         * 第二段为lambda的写法，
+            * @param view
+            */
+           @Pointcut(value = "(execution(* android.view.View.OnClickListener.onClick(android.view.View))&&args(view))||(execution(void *..lambda*(android.view.View))&&args(view))")
+           public void onClick(View view) {
+   
+           }
+   
+           /**
+            * 具体的通知方法，当Pointcut中的方法被调用之后，触发该方法对一些信息进行拦截
+            * @param joinPoint
+            * @param view
+            * @param obj
+            * @throws Throwable
+            */
+           @After("onClick(view)&&!method()&&this(obj)")
+           public void injectOnClick(JoinPoint joinPoint, View view,Object obj) throws Throwable {
+               Trace trace = Data.getEvent(getName(joinPoint, view));
+               if (trace != null) {
+                   track(trace.getId(), trace.getValue());
+               }
+           }
+   
+   
+           private String getName(JoinPoint joinPoint, View view) {
+   
+               StringBuilder sb = new StringBuilder();
+   
+               sb.append(getViewName(view))
+                       .append("$")
+                       .append(getClassName(joinPoint.getTarget().getClass()))
+                       .append("$")
+                       .append(getClassName(view.getContext().getClass()));
+   
+               String md5 = Utils.toMD5(sb.toString());
+   
+               if (BuildConfig.DEBUG) {
+                   Log.d(TAG, "getName: " + sb.toString() + ",MD5: " + md5);
+               }
+   
+               return md5;
+           }
        }
-   
-   }
-   
    ```
-
+   
    我们定义一个数据管理类，本项目中的**Data**，简单模拟了数据的存入和获取，在Application类中存入所有的埋点，实际项目中应该由网络直接下发。当我们拦截到点击事件后，从数据管理类中获取到埋点信息。这个方案也存在的一些问题：主要针对一些lambda表达式，并不能很好的拦截，比如：```this::onClick```这样的写法，就没办法统一拦截，只能单独写切点，需要我们在写代码时能统一一些格式，或者我们直接拦截setOnClickListener，将点击事件替换成我们自己的代理类，大致代码如下：
 
    ```java
-   
+
        @Pointcut("call(* android.view.View.setOnClickListener(android.view.View.OnClickListener))&&args(clickListener)")
        public void setOnClickListener(View.OnClickListener clickListener) {
    
@@ -196,9 +194,8 @@ public static void onEvent(Context context, String eventID, String label);
        public Object injectSetOnClickListener(ProceedingJoinPoint joinPoint, View.OnClickListener clickListener) throws Throwable {
            return joinPoint.proceed(new Object[]{new OnClickListenerProxy(clickListener)});
        }
-   
    ```
-
+   
 4. ##### 通过Gradle插件，将控件的父类直接修改为我们自己的控件
 
    该方案的思路来源于[美团的一篇博客](https://tech.meituan.com/2017/03/02/mt-mobile-analytics-practice.html)，我进行了实践和补充，这是我认为比较完善的方案。
@@ -206,26 +203,26 @@ public static void onEvent(Context context, String eventID, String label);
    我们可以自定义一些常用控件，将所有的控件都直接继承自定义控件，在我们自己的控件中进行埋点操作，这样中，可以拦截到更多的事件，稳定且可靠，比如如下的TTextView：
 
    ```java
-   public class TTextView extends TextView {
-       public TTextView(Context context) {
-           super(context);
-       }
+       public class TTextView extends TextView {
+           public TTextView(Context context) {
+               super(context);
+           }
    
-       public TTextView(Context context, AttributeSet attrs) {
-           super(context, attrs);
-       }
+           public TTextView(Context context, AttributeSet attrs) {
+               super(context, attrs);
+           }
    
-       public TTextView(Context context, AttributeSet attrs, int defStyleAttr) {
-           super(context, attrs, defStyleAttr);
-       }
+           public TTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+               super(context, attrs, defStyleAttr);
+           }
    
-       @Override
-       public boolean performClick() {
-           boolean click = super.performClick();
-           Track.getTrack().getViewTracker().performClick(this);
-           return click;
+           @Override
+           public boolean performClick() {
+               boolean click = super.performClick();
+               Track.getTrack().getViewTracker().performClick(this);
+               return click;
+           }
        }
-   }
    ```
 
    我们在performClick()中进行埋点，任何点击事件，都必然会走这个方法，我们不必担心OnClickListener问题
@@ -293,11 +290,11 @@ public static void onEvent(Context context, String eventID, String label);
    通过这样的方式，可以将所有的控件转换成自定义的控件，但是仍然还有一些缺陷，比如我们很多时候需要在代码中动态添加控件，可以调用addView()的方法，传入需要加入的控件，我们可能会存在new LinearLayout()或new Button()这种情况，我们还是不能转换，但是我们可以结合第一种方案，在ViewGroup.addView时，设置View.AccessibilityDelegate，这样既不就覆盖了所有的情况
    
    ```java
-   @Override
-   public void onViewAdded(View child) {
-       super.onViewAdded(child);
-       AccessibilityDelegateHelper.onViewAdded(child);
-   }
+       @Override
+       public void onViewAdded(View child) {
+           super.onViewAdded(child);
+           AccessibilityDelegateHelper.onViewAdded(child);
+       }
    ```
 
 #### 唯一标识和映射关系的具体实现
@@ -308,4 +305,8 @@ public static void onEvent(Context context, String eventID, String label);
 
 2. 还有一些埋点上传方案是将所有的控件点击事件都上传后台，由后台来捞有效的埋点，这种方案加入index还是有必要的，毕竟后台可以控制哪些需要index，哪些不需要，APP只管上传点位信息就行，也就是**全埋点**的方案，这样的方案缺点主要是浪费流量，针对性不强。
 
-不论什么样的方案，无痕埋点都需要多维护点位，每次页面发生修改，可能都需要后台维护一下埋点。
+不论什么样的方案，无痕埋点都需要多维护点位，每次页面发生修改，可能都需要后台维护一下埋点，这样的工作可以分配给产品、测试、运营他们。
+
+#### 最后
+
+无痕埋点不论如何”无痕“，针对的都是用户简单的固定的事件，这类事件可能占比高达6、7成，而与业务耦合严重的埋点，都还是需要进行手动代码埋点。在埋点技术的选择上，也没有必要为了无痕而无痕，设计一大堆映射关系，更应关注项目的实际情况，选择合适的方案。
