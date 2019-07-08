@@ -8,11 +8,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.warm.track.utils.Utils;
 
 /**
@@ -92,9 +95,9 @@ public abstract class ViewFinder<T> {
 
 
     protected void appendName(StringBuilder sb, View view) {
-        if (view.getTag(R.id.key_fragment_name) != null) {
+        if (view.getTag(R.id.key_extra_name) != null) {
             sb.append("$")
-                    .append(view.getTag(R.id.key_fragment_name));
+                    .append(view.getTag(R.id.key_extra_name));
             ViewGroup viewGroup = (ViewGroup) view.getParent();
 
             if (viewGroup instanceof ViewPager) {
@@ -112,6 +115,18 @@ public abstract class ViewFinder<T> {
 
                 if (!TextUtils.isEmpty(idName)) {
                     appendIDView(sb, view, idName);
+
+                    if (view.getId() == androidx.appcompat.R.id.parentPanel) {
+                        TextView message = view.findViewById(android.R.id.message);
+                        if (message != null) {
+                            String msgStr = message.getText().toString();
+                            if (msgStr.length() > 10) {
+                                msgStr = msgStr.substring(0, 10);
+                            }
+                            sb.append(msgStr);
+                        }
+                    }
+
                 } else {
                     appendNoIDView(sb, view);
                 }
@@ -134,10 +149,12 @@ public abstract class ViewFinder<T> {
         sb.append("$");
         sb.append(view.getClass().getSimpleName());
         ViewGroup viewGroup = (ViewGroup) view.getParent();
-        if (Track.isChildNeedIndex(viewGroup)) {
+        if (Track.isChildNeedIndex(viewGroup) || view.getClass().getName().equals("com.google.android.material.tabs.TabLayout$TabView")) {
             sb.append(":");
             if (viewGroup instanceof RecyclerView) {
                 sb.append(((RecyclerView) viewGroup).getChildAdapterPosition(view));
+            } else if (viewGroup instanceof AdapterView) {
+                sb.append(((AdapterView) viewGroup).getPositionForView(view));
             } else {
                 sb.append(getSameIndex(view, viewGroup));
             }

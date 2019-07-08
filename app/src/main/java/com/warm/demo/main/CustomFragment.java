@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil;
 import com.warm.demo.R;
 import com.warm.demo.base.BaseFragment;
 import com.warm.demo.databinding.FragmentMineBinding;
+import com.warm.demo.track.ViewTrace;
+import com.warm.track.Track;
 
 public class CustomFragment extends BaseFragment {
     private FragmentMineBinding mBinding;
@@ -33,6 +35,7 @@ public class CustomFragment extends BaseFragment {
                 Toast.makeText(getContext(), mBinding.title.getText(), Toast.LENGTH_SHORT).show();
             }
         });
+        Track.bindTrace(mBinding.title,new ViewTrace.Trace("00004","标题"));
     }
 
     @Nullable

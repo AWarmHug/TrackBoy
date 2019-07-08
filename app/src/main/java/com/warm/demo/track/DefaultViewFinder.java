@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.warm.demo.data.Data;
+import com.warm.track.Track;
 import com.warm.track.ViewFinder;
 
 /**
@@ -15,6 +16,9 @@ public class DefaultViewFinder extends ViewFinder<ViewTrace> {
 
     @Override
     public ViewTrace find(View view) {
+        if (Track.getTrace(view) != null) {
+            return new ViewTrace(view.getContext(), Track.getTrace(view));
+        }
         return new ViewTrace(view.getContext(), Data.getEvent(getName(view)));
     }
 
