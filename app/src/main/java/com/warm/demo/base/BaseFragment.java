@@ -13,7 +13,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.setTag(R.id.key_fragment_name,getClass().getSimpleName());
+        view.setTag(R.id.key_extra_name,getClass().getSimpleName());
     }
 
     @Nullable

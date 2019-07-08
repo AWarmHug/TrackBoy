@@ -1,5 +1,6 @@
 package com.warm.track;
 
+import android.view.View;
 import android.view.ViewGroup;
 
 public class Track<T> {
@@ -32,6 +33,23 @@ public class Track<T> {
             return (boolean) tag;
         } else {
             return false;
+        }
+    }
+
+    public static <T> void bindTrace(View view, T t) {
+        view.setTag(R.id.key_track_content, t);
+    }
+
+    public static <T> T getTrace(View view) {
+        Object tag = view.getTag(R.id.key_track_content);
+        if (tag != null) {
+            try {
+                return (T) tag;
+            } catch (Exception e) {
+                return null;
+            }
+        } else {
+            return null;
         }
     }
 }
