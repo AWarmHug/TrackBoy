@@ -8,15 +8,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.warm.demo.R;
 import com.warm.demo.base.BaseActivity;
 import com.warm.demo.databinding.ActivityDetailBinding;
+import com.warm.track.TrackExtraName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends BaseActivity implements TrackExtraName {
     public static final String KEY_TYPE = "TYPE";
 
     public static final int TYPE_TICKET = 1;
-    public static final int TYPE_FOOD = 2;
+    public static final int TYPE_BUS = 2;
 
     private ActivityDetailBinding mBinding;
 
@@ -45,11 +46,15 @@ public class DetailActivity extends BaseActivity {
             case TYPE_TICKET:
                 setTitle("门票详情");
                 break;
-            case TYPE_FOOD:
-                setTitle("食物详情");
-                return;
+            case TYPE_BUS:
+                setTitle("车票详情");
+                break;
         }
 
     }
 
+    @Override
+    public String getExtraName() {
+        return String.valueOf(mType);
+    }
 }

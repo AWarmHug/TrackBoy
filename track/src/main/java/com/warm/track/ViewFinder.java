@@ -3,6 +3,8 @@ package com.warm.track;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.res.Resources;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +43,18 @@ public abstract class ViewFinder<T> {
 
 
     private String getActivityName(View view) {
+
         Activity activity = getActivity(view);
         if (activity != null) {
-            return activity.getClass().getSimpleName();
+            StringBuilder sb = new StringBuilder(activity.getClass().getSimpleName());
+            if (activity instanceof TrackExtraName) {
+                TrackExtraName extraName = (TrackExtraName) activity;
+                if (!TextUtils.isEmpty(extraName.getExtraName())) {
+                    sb.append(extraName.getExtraName());
+                }
+            }
+
+            return sb.toString();
         } else {
             return view.getContext().getClass().getSimpleName();
         }
@@ -92,28 +103,51 @@ public abstract class ViewFinder<T> {
             }
         } else {
             if (view.getId() != View.NO_ID) {
-                sb.append("$");
-                sb.append(view.getClass().getSimpleName())
-                        .append(":")
-                        .append(view.getResources().getResourceEntryName(view.getId()));
-            } else {
-                ViewGroup viewGroup = (ViewGroup) view.getParent();
-                sb.append("$");
-                sb.append(view.getClass().getSimpleName())
-                        .append(":");
-                if (viewGroup instanceof RecyclerView) {
-                    sb.append(((RecyclerView) viewGroup).getChildAdapterPosition(view));
-                } else {
-
-                    sb.append(getSameIndex(view, viewGroup));
+                String idName;
+                try {
+                    idName = view.getResources().getResourceEntryName(view.getId());
+                } catch (Resources.NotFoundException exception) {
+                    idName = null;
                 }
+
+                if (!TextUtils.isEmpty(idName)) {
+                    appendIDView(sb, view, idName);
+                } else {
+                    appendNoIDView(sb, view);
+                }
+
+            } else {
+                appendNoIDView(sb, view);
             }
 
         }
     }
 
+    private void appendIDView(StringBuilder sb, View view, String idName) {
+        sb.append("$");
+        sb.append(view.getClass().getSimpleName())
+                .append(":")
+                .append(idName);
+    }
+
+    private void appendNoIDView(StringBuilder sb, View view) {
+        sb.append("$");
+        sb.append(view.getClass().getSimpleName());
+        ViewGroup viewGroup = (ViewGroup) view.getParent();
+        if (Track.isChildNeedIndex(viewGroup)) {
+            sb.append(":");
+            if (viewGroup instanceof RecyclerView) {
+                sb.append(((RecyclerView) viewGroup).getChildAdapterPosition(view));
+            } else {
+                sb.append(getSameIndex(view, viewGroup));
+            }
+        }
+    }
+
+
     /**
      * 优化index，View相对于同层级的相同类型的view来说排在第几个；
+     *
      * @param view
      * @param viewGroup
      * @return

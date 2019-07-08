@@ -21,11 +21,11 @@ public class MyApp extends Application {
         ViewTracker<ViewTrace> viewTracker = new DefaultViewTracker(new DefaultViewFinder());
         Track.init(viewTracker);
 
-        Data.putEvent("79b9a7987b4b786a4123da40c9e1dff1", "00001", "按钮");
+        Data.putEvent("ff9270d3f4a5cb5b561b6c4139c6262f", "00001", "按钮");
 
-        Data.putEvent("1a96b5cdec72d9ccbcc360d72dd1646f", "00002", "选中#未选中");
+        Data.putEvent("84846570d574aeb5a2a462b621187b90", "00002", "选中#未选中");
 
-        Data.putEvent("c6fb01aa89e4a01cb4d40304f0c9e27a", "00003", "打开弹框");
+        Data.putEvent("482a26e6099354307b08602aac859384", "00003", "打开弹框");
 
         Data.putEvent("e5cfec6bddcbc26958c45e124c371226", "00004", "申请信息：");
 
