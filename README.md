@@ -309,3 +309,7 @@ public static void onEvent(Context context, String eventID, String label);
 #### 最后
 
 无痕埋点不论如何”无痕“，针对的都是用户简单的固定的事件，这类事件可能占比高达6、7成，而与业务耦合严重的埋点，都还是需要进行手动代码埋点。在埋点技术的选择上，也没有必要为了无痕而无痕，更应关注项目的实际情况，选择合适的方案。
+
+#### 最最后
+
+如何debug插件，[看这](<https://www.jianshu.com/p/6bbe9352f75d>)
